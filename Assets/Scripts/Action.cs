@@ -2,6 +2,23 @@
 
 public class Action : MonoBehaviour
 {
+    public Action()
+    {
+        activationTag = GameplayTags.None_Action;
+        grantsTags = GameplayTags.None_Action;
+        blockedTags = GameplayTags.None_Action;
+    }
+    public Action(Action other)
+    {
+        this.actionSystem = other.actionSystem;
+        this.activationTag = other.activationTag;
+        this.grantsTags = other.grantsTags;
+        this.blockedTags = other.blockedTags;
+        this.bIsRunning = other.bIsRunning;
+        this.bAutoStart = other.bAutoStart;
+        this.timeStarted = other.timeStarted;
+        this.instigator = other.instigator;
+    }
     public void Initialize(ActionSystem InActionSystem)
     {
         actionSystem = InActionSystem;
@@ -20,7 +37,7 @@ public class Action : MonoBehaviour
     {
         return grantsTags;
     }
-    public bool GetAtuoStart()
+    public bool GetAutoStart()
     {
         return bAutoStart;
     }
@@ -35,11 +52,11 @@ public class Action : MonoBehaviour
 
     public virtual bool IsCanStart(GameObject instigator)
     {
-        if(IsRunning() == true)
+        if (IsRunning() == true)
         {
             return false;
         }
-        if(actionSystem.ActiveTagHasAny(blockedTags))
+        if (actionSystem.ActiveTagHasAny(blockedTags))
         {
             return false;
         }
@@ -53,6 +70,8 @@ public class Action : MonoBehaviour
 
         bIsRunning = true;
         instigator = inInstigator;
+
+        timeStarted = Time.time;
 
         actionSystem.OnActionStated.Invoke(actionSystem, this);
     }
@@ -81,7 +100,7 @@ public class Action : MonoBehaviour
     protected bool bIsRunning = false;
     protected GameObject instigator = null;
 
-    protected float timeTarted;
+    protected float timeStarted;
 
     protected bool bAutoStart = false;
 }
