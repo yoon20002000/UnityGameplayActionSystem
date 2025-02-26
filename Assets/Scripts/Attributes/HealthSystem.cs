@@ -11,7 +11,7 @@ public class HealthSystem : MonoBehaviour
     public OnValueChanged OnMaxHealthChanged;
     public OnLiveStateChanged OnDeath;
 
-    public bool IsAlive() => hp <= 0;
+    public bool IsAlive() => hp > 0;
 
     public HealthSystem()
     {
@@ -36,7 +36,7 @@ public class HealthSystem : MonoBehaviour
         return maxHP;
     }
 
-    public void ApplyDamage(GameObject damageCauser, /*GameObject targetActor*/ float damageAmount)
+    public void ApplyHealthChange(GameObject damageCauser, float damageAmount)
     {
         if(IsAlive() == true)
         {
@@ -52,7 +52,6 @@ public class HealthSystem : MonoBehaviour
             }
             Debug.LogFormat("Damaged!! Damage Causer : {0} Amount : {1}, Cur HP : {2}", damageCauser.name, damageAmount, hp);
         }        
-        
     }
     public void SetMaxHp(float addAmount)
     {

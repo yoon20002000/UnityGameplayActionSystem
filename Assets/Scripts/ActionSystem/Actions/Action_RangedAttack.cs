@@ -26,38 +26,32 @@ public class Action_RangedAttack : Action_AttackBase
 
         //var col = inInstigator.GetComponent<Collider2D>();
         //Vector2 offset = new Vector2(col.bounds.size.x, 0);
-        //firstHit(inInstigator, offset);
+        //getHitGameObjectOrNull(inInstigator, offset);
 
         GameObject hitGameObject = getHitGameObjectOrNull(inInstigator, true);
         
         if (hitGameObject != null)
         {
-            HealthSystem healthSystem = hitGameObject.GetComponent<HealthSystem>();
-            if(healthSystem != null)
-            {
-                healthSystem.ApplyDamage(inInstigator, damage);
-            }
+            GameplayLibrary.ApplyDamage(inInstigator, hitGameObject, damage);
         }
     }
-    protected void firstHit(GameObject inInstigator, Vector2 offset = default)
+    protected GameObject getHitGameObjectOrNull(GameObject inInstigator, Vector2 offset = default)
     {
-        
-
         Vector2 start = inInstigator.transform.position;
         start += offset;
         Vector2 dir = instigator.transform.right;
         Vector2 end = start + dir * distance;
 
-        Debug.Log("start : " + start);
-        Debug.Log("dir : " + dir);
-        Debug.Log("end : " + end);
-
         RaycastHit2D hit = Physics2D.Raycast(start, dir, distance, targetLayerMask);
         Debug.DrawRay(start, dir * distance, Color.red, 5);
 
-        if (hit)
+        if(hit)
         {
-            Debug.LogFormat("Hit Target : {0}", hit.collider.gameObject.name);
+            return hit.collider.gameObject;
+        }
+        else
+        {
+            return null;
         }
     }
     protected GameObject getHitGameObjectOrNull(GameObject inInstigator, bool bIgnoreSelf = true)
