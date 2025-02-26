@@ -3,20 +3,28 @@ using UnityEngine;
 
 public class ActionEffect : Action
 {
-    ActionEffect():base()
+    public ActionEffect() : base()
     {
         bAutoStart = true;
     }
-    
+    public override void DeepCopy(Action other)
+    {
+        base.DeepCopy(other);
+    }
+
+    public override void Initialize(ActionSystem InActionSystem, Action other = null)
+    {
+        base.Initialize(InActionSystem, other);
+    }
     public override void StartAction(Character inInstigator)
     {
         base.StartAction(inInstigator);
 
-        if(duration > 0.0f)
+        if (duration > 0.0f)
         {
             durationCo = StartCoroutine(executeAction(duration, inInstigator, StopAction));
         }
-        
+
         ExecutePeriodEffect(inInstigator);
 
         if (period > 0.0f)

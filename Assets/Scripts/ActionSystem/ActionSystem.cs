@@ -17,15 +17,20 @@ public class ActionSystem : MonoBehaviour
 
     protected List<Action> actions = new List<Action>();
 
+    private Character character = null;
+
     private void Start()
     {
-        Character character = this.gameObject.GetComponent<Character>();
+        character = this.gameObject.GetComponent<Character>();
         foreach (var action in defaultActions)
         {
             AddAction(character, action);
         }
     }
-
+    public Character GetOwnerCharacter()
+    {
+        return character;
+    }
     public void AddAction(Character inInstigator, Action action)
     {
         // 리플렉션 사용하지 않고 type을 이용해 복사 후 각 객체 별 Init처리
