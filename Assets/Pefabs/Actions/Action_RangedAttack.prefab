@@ -47,12 +47,14 @@ MonoBehaviour:
   activationTag: 1
   grantsTags: 16
   blockedTags: 352
+  bIsRunning: 0
+  bAutoStart: 0
   damage: 10
   count: 1
   bIsDistributionDamage: 0
   attackDelay: 0
   duration: 0
-  distance: 500
+  distance: 10
   targetLayerMask:
     serializedVersion: 2
     m_Bits: 64

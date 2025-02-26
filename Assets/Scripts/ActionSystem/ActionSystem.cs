@@ -16,20 +16,21 @@ public class ActionSystem : MonoBehaviour
     [SerializeField]
     protected List<Action> defaultActions;
 
-    [SerializeField]
     protected List<Action> actions = new List<Action>();
 
     private void Start()
     {
         foreach(var action in defaultActions)
         {
-            actions.Add(action);
+            AddAction(this.gameObject, action);
         }
     }
 
     public void AddAction(GameObject inInstigator, Action action)
     {
-        Action newAction = this.AddComponent<Action>();
+        // 리플렉션 사용하지 않고 type을 이용해 복사 후 각 객체 별 Init처리
+        var type = action.GetType();
+        Action newAction = (Action)this.gameObject.AddComponent(type);
         newAction.Initialize(this, action);
 
         actions.Add(newAction);
@@ -51,7 +52,7 @@ public class ActionSystem : MonoBehaviour
     [Obsolete] // 얘네는 UObject subclass bp 했을 때 cdo를 각각 생성하는게 아니라 비교 했을때 다 내가 원하는게 아니어도 그 값을 뱉음.
     public Action GetActionOrNull(Action action)
     {
-        foreach(Action a in defaultActions)
+        foreach(Action a in actions)
         {
             if(a.GetType() == action.GetType())
             {
@@ -64,7 +65,7 @@ public class ActionSystem : MonoBehaviour
     {
         Assert.IsTrue(isOnlyOneTagSet(actionTag), "Multiple Action Tag in ActivationTag");
 
-        foreach (Action action in defaultActions)
+        foreach (Action action in actions)
         {
             if (action.GetActivationTag() == actionTag)
             {

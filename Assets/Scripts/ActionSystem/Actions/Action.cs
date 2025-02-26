@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using NUnit.Framework;
+using UnityEngine;
 
 public class Action : MonoBehaviour
 {
@@ -8,8 +9,10 @@ public class Action : MonoBehaviour
         grantsTags = GameplayTags.None_Action;
         blockedTags = GameplayTags.None_Action;
     }
-    public void DeepCopy(Action other)
+    public virtual void DeepCopy(Action other)
     {
+        Assert.IsNotNull(other, "You DeepCopy using original action resources");
+
         this.actionSystem = other.actionSystem;
         this.activationTag = other.activationTag;
         this.grantsTags = other.grantsTags;
@@ -19,12 +22,18 @@ public class Action : MonoBehaviour
         this.timeStarted = other.timeStarted;
         this.instigator = other.instigator;
     }
-    public void Initialize(ActionSystem InActionSystem, Action other = null)
+    public virtual void Initialize(ActionSystem InActionSystem, Action other = null)
     {
         actionSystem = InActionSystem;
         if(other != null)
         {
-            DeepCopy(other);
+            this.activationTag = other.activationTag;
+            this.grantsTags = other.grantsTags;
+            this.blockedTags = other.blockedTags;
+            this.bIsRunning = other.bIsRunning;
+            this.bAutoStart = other.bAutoStart;
+            this.timeStarted = other.timeStarted;
+            this.instigator = other.instigator;
         }
     }
 
@@ -70,7 +79,7 @@ public class Action : MonoBehaviour
 
     public virtual void StartAction(GameObject inInstigator)
     {
-        Debug.Log("Start Action : " + this.name);
+        Debug.LogFormat("Start Action : {0}, Instigator : {1}", activationTag.ToString(), inInstigator.name );
         actionSystem.SetActiveTags(grantsTags);
 
         bIsRunning = true;
@@ -88,7 +97,7 @@ public class Action : MonoBehaviour
         bIsRunning = false;
         instigator = inInstigator;
 
-        actionSystem.OnActionStoped.Invoke(actionSystem, this);
+        actionSystem.OnActionStoped?.Invoke(actionSystem, this);
     }
 
     protected ActionSystem actionSystem = null;
@@ -102,10 +111,12 @@ public class Action : MonoBehaviour
     [SerializeField]
     protected GameplayTags blockedTags;
 
+    [SerializeField]
     protected bool bIsRunning = false;
     protected GameObject instigator = null;
 
     protected float timeStarted;
 
+    [SerializeField]
     protected bool bAutoStart = false;
 }
