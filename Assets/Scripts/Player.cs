@@ -4,13 +4,12 @@ using UnityEngine.InputSystem;
 public class Player : MonoBehaviour
 {
     [SerializeField]
-    ActionSystem actionSystem;
+    private ActionSystem actionSystem;
 
     [SerializeField]
-    InputActionAsset inputActionAsset;
+    private InputActionAsset inputActionAsset;
 
-    [SerializeField]
-    InputAction attackInput;
+    private InputAction attackInput;
     private void OnEnable()
     {
         attackInput = inputActionAsset.FindAction("Attack");
@@ -24,6 +23,6 @@ public class Player : MonoBehaviour
 
     private void attackInput_performed(InputAction.CallbackContext obj)
     {
-        Debug.Log("Attack Input");
+        actionSystem.StartActionByTag(this.gameObject, GameplayTags.Action_Attack);
     }
 }

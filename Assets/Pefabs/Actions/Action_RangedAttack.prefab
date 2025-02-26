@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8924379327168756650}
-  - component: {fileID: 5376581898198446447}
+  - component: {fileID: -1792996104821164925}
   m_Layer: 0
-  m_Name: ActionBase
+  m_Name: Action_RangedAttack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32,7 +32,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5376581898198446447
+--- !u!114 &-1792996104821164925
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,9 +41,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 3841967630658554333}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 160ee2ed869578543868df47d5c18d9d, type: 3}
+  m_Script: {fileID: 11500000, guid: 4defdb1a535afe14ca86c9b1dbf1b05d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activationTag: 0
-  grantsTags: 0
-  blockedTags: 0
+  activationTag: 1
+  grantsTags: 16
+  blockedTags: 352
+  damage: 10
+  count: 1
+  bIsDistributionDamage: 0
+  attackDelay: 0
+  duration: 0
+  distance: 500
+  targetLayerMask:
+    serializedVersion: 2
+    m_Bits: 64

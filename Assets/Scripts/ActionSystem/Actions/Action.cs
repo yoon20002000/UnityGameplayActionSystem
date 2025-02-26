@@ -8,7 +8,7 @@ public class Action : MonoBehaviour
         grantsTags = GameplayTags.None_Action;
         blockedTags = GameplayTags.None_Action;
     }
-    public Action(Action other)
+    public void DeepCopy(Action other)
     {
         this.actionSystem = other.actionSystem;
         this.activationTag = other.activationTag;
@@ -19,9 +19,13 @@ public class Action : MonoBehaviour
         this.timeStarted = other.timeStarted;
         this.instigator = other.instigator;
     }
-    public void Initialize(ActionSystem InActionSystem)
+    public void Initialize(ActionSystem InActionSystem, Action other = null)
     {
         actionSystem = InActionSystem;
+        if(other != null)
+        {
+            DeepCopy(other);
+        }
     }
 
     public ActionSystem GetActionSystem()
@@ -66,6 +70,7 @@ public class Action : MonoBehaviour
 
     public virtual void StartAction(GameObject inInstigator)
     {
+        Debug.Log("Start Action : " + this.name);
         actionSystem.SetActiveTags(grantsTags);
 
         bIsRunning = true;
@@ -73,7 +78,7 @@ public class Action : MonoBehaviour
 
         timeStarted = Time.time;
 
-        actionSystem.OnActionStated.Invoke(actionSystem, this);
+        actionSystem.OnActionStated?.Invoke(actionSystem, this);
     }
 
     public virtual void StopAction(GameObject inInstigator)
@@ -86,7 +91,7 @@ public class Action : MonoBehaviour
         actionSystem.OnActionStoped.Invoke(actionSystem, this);
     }
 
-    protected ActionSystem actionSystem;
+    protected ActionSystem actionSystem = null;
 
     // editor에서 하나만 선택하게 해야 됨.
     [SerializeField]

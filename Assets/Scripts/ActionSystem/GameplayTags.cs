@@ -12,4 +12,5 @@ public enum GameplayTags
     Status_Defencing                = 1 << 5,
     Status_Stun                     = 1 << 6,
     Status_Invincibility            = 1 << 7,
+    Status_Dashing                  = 1 << 8,
 }
