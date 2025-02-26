@@ -4,9 +4,9 @@ using UnityEngine;
 public class Action_RangedAttack : Action_AttackBase
 {
     [SerializeField]
-    private float distance;
+    protected float distance;
     [SerializeField]
-    private LayerMask targetLayerMask;
+    protected LayerMask targetLayerMask;
     public override void Initialize(ActionSystem InActionSystem, Action other = null)
     {
         base.Initialize(InActionSystem, other);
@@ -28,7 +28,16 @@ public class Action_RangedAttack : Action_AttackBase
         //Vector2 offset = new Vector2(col.bounds.size.x, 0);
         //firstHit(inInstigator, offset);
 
-        checkAllHit(inInstigator, true);
+        GameObject hitGameObject = getHitGameObjectOrNull(inInstigator, true);
+        
+        if (hitGameObject != null)
+        {
+            HealthSystem healthSystem = hitGameObject.GetComponent<HealthSystem>();
+            if(healthSystem != null)
+            {
+                healthSystem.ApplyDamage(inInstigator, damage);
+            }
+        }
     }
     protected void firstHit(GameObject inInstigator, Vector2 offset = default)
     {
@@ -51,7 +60,7 @@ public class Action_RangedAttack : Action_AttackBase
             Debug.LogFormat("Hit Target : {0}", hit.collider.gameObject.name);
         }
     }
-    protected void checkAllHit(GameObject inInstigator, bool bIgnoreSelf = true)
+    protected GameObject getHitGameObjectOrNull(GameObject inInstigator, bool bIgnoreSelf = true)
     {
         Vector2 start = inInstigator.transform.position;
         Vector2 dir = instigator.transform.right;
@@ -62,7 +71,9 @@ public class Action_RangedAttack : Action_AttackBase
             if (hit.collider.gameObject != inInstigator)
             {
                 Debug.LogFormat("Hit Target : {0}", hit.collider.gameObject.name);
+                return hit.collider.gameObject;
             }
         }
+        return null;
     }
 }

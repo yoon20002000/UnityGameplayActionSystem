@@ -5,20 +5,20 @@ using UnityEngine;
 public class Action_AttackBase : Action
 {
     [SerializeField]
-    private float damage;
+    protected float damage;
 
     [SerializeField]
-    private float count;
+    protected float count;
 
     [SerializeField]
-    private bool bIsDistributionDamage;
+    protected bool bIsDistributionDamage;
 
     [SerializeField]
-    private float attackDelay;
+    protected float attackDelay;
     [SerializeField]
-    private float duration;
+    protected float duration;
 
-    private Coroutine attackCo;
+    protected Coroutine attackCo;
     public override void Initialize(ActionSystem InActionSystem, Action other = null)
     {
         base.Initialize(InActionSystem, other);
