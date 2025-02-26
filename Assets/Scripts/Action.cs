@@ -16,6 +16,10 @@ public class Action : MonoBehaviour
     {
         return activationTag;
     }
+    public GameplayTags GetGrantsTags()
+    {
+        return grantsTags;
+    }
     public bool GetAtuoStart()
     {
         return bAutoStart;
