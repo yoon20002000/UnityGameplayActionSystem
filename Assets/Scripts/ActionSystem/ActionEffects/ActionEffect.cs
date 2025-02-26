@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using UnityEngine.Assertions;
+using System.Collections;
 using UnityEngine;
 
 public class ActionEffect : Action
@@ -10,11 +11,29 @@ public class ActionEffect : Action
     public override void DeepCopy(Action other)
     {
         base.DeepCopy(other);
+        Assert.IsTrue(other is ActionEffect);
+        ActionEffect actionEffect = other as ActionEffect;
+
+        if (actionEffect == null)
+        {
+            return;
+        }
+        duration = actionEffect.duration;
+        period = actionEffect.period;
     }
 
     public override void Initialize(ActionSystem InActionSystem, Action other = null)
     {
         base.Initialize(InActionSystem, other);
+        Assert.IsTrue(other is ActionEffect);
+        ActionEffect actionEffect = other as ActionEffect;
+        
+        if(actionEffect == null)
+        {
+            return;
+        }
+        duration = actionEffect.duration;
+        period = actionEffect.period;
     }
     public override void StartAction(Character inInstigator)
     {
@@ -25,7 +44,7 @@ public class ActionEffect : Action
             durationCo = StartCoroutine(executeAction(duration, inInstigator, StopAction));
         }
 
-        ExecutePeriodEffect(inInstigator);
+        ExecutePeriodEffect(instigator);
 
         if (period > 0.0f)
         {
@@ -38,6 +57,9 @@ public class ActionEffect : Action
 
         StopCoroutine(durationCo);
         StopCoroutine(periodCo);
+        
+        durationCo = null;
+        periodCo = null;
 
         actionSystem.RemoveAction(this);
     }
@@ -55,8 +77,11 @@ public class ActionEffect : Action
 
     protected IEnumerator executeAction(float waitSec, Character inInstigator, System.Action<Character> action)
     {
-        yield return new WaitForSeconds(waitSec);
-        action.Invoke(inInstigator);
+        while(true)
+        {
+            yield return new WaitForSeconds(waitSec);
+            action.Invoke(inInstigator);
+        }
     }
 
     [SerializeField]

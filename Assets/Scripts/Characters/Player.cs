@@ -4,9 +4,6 @@ using UnityEngine.InputSystem;
 public class Player : Character
 {
     [SerializeField]
-    private ActionSystem actionSystem;
-
-    [SerializeField]
     private InputActionAsset inputActionAsset;
 
     private InputAction attackInput;

@@ -54,6 +54,8 @@ MonoBehaviour:
   bIsDistributionDamage: 0
   attackDelay: 0
   duration: 0
+  applyActionEffects:
+  - {fileID: -6822794030201258381, guid: e45342947db8939489dd56861a767471, type: 3}
   distance: 10
   targetLayerMask:
     serializedVersion: 2

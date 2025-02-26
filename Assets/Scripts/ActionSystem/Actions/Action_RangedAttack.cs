@@ -28,12 +28,14 @@ public class Action_RangedAttack : Action_AttackBase
         //Vector2 offset = new Vector2(col.bounds.size.x, 0);
         //getHitGameObjectOrNull(inInstigator, offset);
 
-        Character hitGameObject = getHitGameObjectOrNull(inInstigator, true);
+        Character hitCharacter = getHitGameObjectOrNull(inInstigator, true);
         
-        if (hitGameObject != null)
+        if (hitCharacter != null)
         {
-            GameplayLibrary.ApplyDamage(inInstigator, hitGameObject, damage);
+            GameplayLibrary.ApplyDamage(inInstigator, hitCharacter, damage);
         }
+
+        applyActionEffactsToTarget(instigator, hitCharacter);
     }
     protected GameObject getHitGameObjectOrNull(Character inInstigator, Vector2 offset = default)
     {

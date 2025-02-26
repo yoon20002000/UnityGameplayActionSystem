@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 484615527330085798}
-  - component: {fileID: 8444921721874623071}
+  - component: {fileID: -6822794030201258381}
   m_Layer: 0
   m_Name: ActionEffect_Bleeding
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8444921721874623071
+--- !u!114 &-6822794030201258381
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,9 +41,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 4489386289721994532}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82dd9adba4ac0c645909cfee0d9af42f, type: 3}
+  m_Script: {fileID: 11500000, guid: 9457b4891e2bd8743913d5292e00cbaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   activationTag: 0
-  grantsTags: 0
+  grantsTags: 512
   blockedTags: 0
+  bIsRunning: 0
+  bAutoStart: 1
+  duration: 5
+  period: 1
+  damage: 1

@@ -54,3 +54,4 @@ MonoBehaviour:
   bIsDistributionDamage: 0
   attackDelay: 0
   duration: 0
+  applyActionEffects: []
