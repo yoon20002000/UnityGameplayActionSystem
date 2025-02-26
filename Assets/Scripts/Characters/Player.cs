@@ -23,6 +23,6 @@ public class Player : Character
 
     private void attackInput_performed(InputAction.CallbackContext obj)
     {
-        actionSystem.StartActionByTag(this.gameObject, GameplayTags.Action_Attack);
+        actionSystem.StartActionByTag(this, GameplayTags.Action_Attack);
     }
 }

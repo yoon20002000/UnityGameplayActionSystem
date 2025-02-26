@@ -1,8 +1,7 @@
-﻿using NUnit.Framework;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class ActionSystem : MonoBehaviour
 {
@@ -20,13 +19,14 @@ public class ActionSystem : MonoBehaviour
 
     private void Start()
     {
-        foreach(var action in defaultActions)
+        Character character = this.gameObject.GetComponent<Character>();
+        foreach (var action in defaultActions)
         {
-            AddAction(this.gameObject, action);
+            AddAction(character, action);
         }
     }
 
-    public void AddAction(GameObject inInstigator, Action action)
+    public void AddAction(Character inInstigator, Action action)
     {
         // 리플렉션 사용하지 않고 type을 이용해 복사 후 각 객체 별 Init처리
         var type = action.GetType();
@@ -74,7 +74,7 @@ public class ActionSystem : MonoBehaviour
         }
         return null;
     }
-    public bool StartActionByTag(GameObject inInstigator, GameplayTags actionTag)
+    public bool StartActionByTag(Character inInstigator, GameplayTags actionTag)
     {
         Assert.IsTrue(isOnlyOneTagSet(actionTag), "Multiple Action Tag in ActivationTag");
 
@@ -96,7 +96,7 @@ public class ActionSystem : MonoBehaviour
             return true;
         }
     }
-    public bool StopActionByTag(GameObject inInstigator, GameplayTags actionTag)
+    public bool StopActionByTag(Character inInstigator, GameplayTags actionTag)
     {
         Action action = GetActionOrNull(actionTag);
         if(action != null)

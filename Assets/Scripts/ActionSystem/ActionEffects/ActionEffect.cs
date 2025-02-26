@@ -8,7 +8,7 @@ public class ActionEffect : Action
         bAutoStart = true;
     }
     
-    public override void StartAction(GameObject inInstigator)
+    public override void StartAction(Character inInstigator)
     {
         base.StartAction(inInstigator);
 
@@ -24,7 +24,7 @@ public class ActionEffect : Action
             periodCo = StartCoroutine(executeAction(period, inInstigator, ExecutePeriodEffect));
         }
     }
-    public override void StopAction(GameObject inInstigator)
+    public override void StopAction(Character inInstigator)
     {
         base.StopAction(inInstigator);
 
@@ -40,12 +40,12 @@ public class ActionEffect : Action
         return endTime - Time.time;
     }
 
-    protected virtual void ExecutePeriodEffect(GameObject inInstigator)
+    protected virtual void ExecutePeriodEffect(Character inInstigator)
     {
 
     }
 
-    protected IEnumerator executeAction(float waitSec, GameObject inInstigator, System.Action<GameObject> action)
+    protected IEnumerator executeAction(float waitSec, Character inInstigator, System.Action<Character> action)
     {
         yield return new WaitForSeconds(waitSec);
         action.Invoke(inInstigator);

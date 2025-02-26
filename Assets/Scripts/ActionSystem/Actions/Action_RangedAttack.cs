@@ -1,5 +1,5 @@
-﻿using NUnit.Framework;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.Assertions;
 
 public class Action_RangedAttack : Action_AttackBase
 {
@@ -20,7 +20,7 @@ public class Action_RangedAttack : Action_AttackBase
         distance = action.distance;
         targetLayerMask = action.targetLayerMask;
     }
-    protected override void attackDelayElapsed(GameObject inInstigator)
+    protected override void attackDelayElapsed(Character inInstigator)
     {
         base.attackDelayElapsed(inInstigator);
 
@@ -28,14 +28,14 @@ public class Action_RangedAttack : Action_AttackBase
         //Vector2 offset = new Vector2(col.bounds.size.x, 0);
         //getHitGameObjectOrNull(inInstigator, offset);
 
-        GameObject hitGameObject = getHitGameObjectOrNull(inInstigator, true);
+        Character hitGameObject = getHitGameObjectOrNull(inInstigator, true);
         
         if (hitGameObject != null)
         {
             GameplayLibrary.ApplyDamage(inInstigator, hitGameObject, damage);
         }
     }
-    protected GameObject getHitGameObjectOrNull(GameObject inInstigator, Vector2 offset = default)
+    protected GameObject getHitGameObjectOrNull(Character inInstigator, Vector2 offset = default)
     {
         Vector2 start = inInstigator.transform.position;
         start += offset;
@@ -54,7 +54,7 @@ public class Action_RangedAttack : Action_AttackBase
             return null;
         }
     }
-    protected GameObject getHitGameObjectOrNull(GameObject inInstigator, bool bIgnoreSelf = true)
+    protected Character getHitGameObjectOrNull(Character inInstigator, bool bIgnoreSelf = true)
     {
         Vector2 start = inInstigator.transform.position;
         Vector2 dir = instigator.transform.right;
@@ -65,7 +65,7 @@ public class Action_RangedAttack : Action_AttackBase
             if (hit.collider.gameObject != inInstigator)
             {
                 Debug.LogFormat("Hit Target : {0}", hit.collider.gameObject.name);
-                return hit.collider.gameObject;
+                return hit.collider.gameObject.GetComponent<Character>();
             }
         }
         return null;

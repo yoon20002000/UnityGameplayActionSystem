@@ -2,7 +2,7 @@
 
 public class GameplayLibrary
 {
-    public static void ApplyDamage(GameObject damageCauser, GameObject targetActor, float damageAmount)
+    public static void ApplyDamage(Character damageCauser, Character targetActor, float damageAmount)
     {
         HealthSystem targetHealthSystem = targetActor.GetComponent<HealthSystem>();
 

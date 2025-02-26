@@ -37,7 +37,7 @@ public class Action_AttackBase : Action
         attackDelay = action.attackDelay;
         duration = action.duration;
     }
-    public override void StartAction(GameObject inInstigator)
+    public override void StartAction(Character inInstigator)
     {
         // inInstigator.setanim
         base.StartAction(inInstigator);
@@ -52,7 +52,7 @@ public class Action_AttackBase : Action
         }
     }
 
-    private IEnumerator attack(float inAttackDelay, System.Action<GameObject> executeFunction, GameObject inInstigator)
+    private IEnumerator attack(float inAttackDelay, System.Action<Character> executeFunction, Character inInstigator)
     {
         yield return new WaitForSeconds(inAttackDelay);
 
@@ -61,12 +61,12 @@ public class Action_AttackBase : Action
         yield return new WaitForSeconds(duration - inAttackDelay);
         StopAction(inInstigator);
     }
-    protected virtual void attackDelayElapsed(GameObject inInstigator)
+    protected virtual void attackDelayElapsed(Character inInstigator)
     {
 
     }
 
-    public override void StopAction(GameObject inInstigator)
+    public override void StopAction(Character inInstigator)
     {
         base.StopAction(inInstigator);
     }

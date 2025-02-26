@@ -36,7 +36,7 @@ public class HealthSystem : MonoBehaviour
         return maxHP;
     }
 
-    public void ApplyHealthChange(GameObject damageCauser, float damageAmount)
+    public void ApplyHealthChange(Character damageCauser, float damageAmount)
     {
         if(IsAlive() == true)
         {

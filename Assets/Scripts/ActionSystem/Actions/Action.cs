@@ -63,7 +63,7 @@ public class Action : MonoBehaviour
         return bIsRunning;
     }
 
-    public virtual bool IsCanStart(GameObject inInstigator)
+    public virtual bool IsCanStart(Character inInstigator)
     {
         if (IsRunning() == true)
         {
@@ -77,7 +77,7 @@ public class Action : MonoBehaviour
         return true;
     }
 
-    public virtual void StartAction(GameObject inInstigator)
+    public virtual void StartAction(Character inInstigator)
     {
         Debug.LogFormat("Start Action : {0}, Instigator : {1}", activationTag.ToString(), inInstigator.name );
         actionSystem.SetActiveTags(grantsTags);
@@ -90,7 +90,7 @@ public class Action : MonoBehaviour
         actionSystem.OnActionStated?.Invoke(actionSystem, this);
     }
 
-    public virtual void StopAction(GameObject inInstigator)
+    public virtual void StopAction(Character inInstigator)
     {
         actionSystem.UnSetActiveTags(grantsTags);
 
@@ -113,7 +113,7 @@ public class Action : MonoBehaviour
 
     [SerializeField]
     protected bool bIsRunning = false;
-    protected GameObject instigator = null;
+    protected Character instigator = null;
 
     protected float timeStarted;
 
