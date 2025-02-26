@@ -16,7 +16,7 @@ public class ActionSystem : MonoBehaviour
     [SerializeField]
     protected List<Action> defaultActions;
 
-    protected List<Action> actions;
+    protected List<Action> actions = new List<Action>(Enum.GetValues(typeof(GameplayTags)).Length);
     private void Start()
     {
         foreach (Action action in defaultActions)
@@ -27,7 +27,7 @@ public class ActionSystem : MonoBehaviour
 
     public void AddAction(GameObject inInstigator, Action action)
     {
-        Action newAction = new Action(action);
+        Action newAction = this.AddComponent<Action>();
         newAction.Initialize(this);
 
         actions.Add(newAction);
