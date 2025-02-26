@@ -50,7 +50,7 @@ public class Action : MonoBehaviour
         return bIsRunning;
     }
 
-    public virtual bool IsCanStart(GameObject instigator)
+    public virtual bool IsCanStart(GameObject inInstigator)
     {
         if (IsRunning() == true)
         {

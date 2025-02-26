@@ -25,19 +25,19 @@ public class ActionSystem : MonoBehaviour
         }
     }
 
-    public void AddAction(GameObject instigator, Action action)
+    public void AddAction(GameObject inInstigator, Action action)
     {
         Action newAction = new Action(action);
         newAction.Initialize(this);
 
         actions.Add(newAction);
         
-        if(newAction.GetAutoStart() == true && newAction.IsCanStart(instigator) == true)
+        if(newAction.GetAutoStart() == true && newAction.IsCanStart(inInstigator) == true)
         {
-            newAction.StartAction(instigator);
+            newAction.StartAction(inInstigator);
         }
     }
-    public void RemoveAction(GameObject instigator, Action action)
+    public void RemoveAction(Action action)
     {
         if(action.IsRunning() == true)
         {
@@ -71,7 +71,7 @@ public class ActionSystem : MonoBehaviour
         }
         return null;
     }
-    public bool StartActionByTag(GameObject instigator, GameplayTags actionTag)
+    public bool StartActionByTag(GameObject inInstigator, GameplayTags actionTag)
     {
         Assert.IsTrue(isOnlyOneTagSet(actionTag), "Multiple Action Tag in ActivationTag");
 
@@ -83,24 +83,24 @@ public class ActionSystem : MonoBehaviour
         }
         else
         {
-            if(action.IsCanStart(instigator) == false)
+            if(action.IsCanStart(inInstigator) == false)
             {
-                Debug.LogWarningFormat("Can not start action {0}. Instigator : {1}, GameObject : {2}", actionTag.ToString(), instigator.name, gameObject.name);
+                Debug.LogWarningFormat("Can not start action {0}. Instigator : {1}, GameObject : {2}", actionTag.ToString(), inInstigator.name, gameObject.name);
                 return false;
             }
 
-            action.StartAction(instigator);
+            action.StartAction(inInstigator);
             return true;
         }
     }
-    public bool StopActionByTag(GameObject instigator, GameplayTags actionTag)
+    public bool StopActionByTag(GameObject inInstigator, GameplayTags actionTag)
     {
         Action action = GetActionOrNull(actionTag);
         if(action != null)
         {
             if(action.IsRunning() == true)
             {
-                action.StopAction(instigator);
+                action.StopAction(inInstigator);
                 return true;
             }
         }
