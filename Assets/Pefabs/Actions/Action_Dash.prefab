@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8924379327168756650}
-  - component: {fileID: 5376581898198446447}
+  - component: {fileID: -2211235284015479718}
   m_Layer: 0
   m_Name: Action_Dash
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5376581898198446447
+--- !u!114 &-2211235284015479718
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,12 +41,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 3841967630658554333}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 160ee2ed869578543868df47d5c18d9d, type: 3}
+  m_Script: {fileID: 11500000, guid: 3a3e80a3692502549b1b55af7c70c0c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   activationTag: 4
-  grantsTags: 384
+  grantsTags: 256
   cancelTags: 3
   blockedTags: 64
   bIsRunning: 0
   bAutoStart: 0
+  bAutoStopAfterOnce: 1
+  applyActionEffects:
+  - {fileID: 8444921721874623071, guid: ec63832ccd3d5f34e83046c52a6063a5, type: 3}

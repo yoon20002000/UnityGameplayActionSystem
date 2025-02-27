@@ -1,12 +1,20 @@
 ﻿using UnityEngine;
 using UnityEngine.Assertions;
 
-public class Action_RangedAttack : Action_AttackBase
+public class Action_RangedAttack : Action_AttackBase, IApplyActionEffects
 {
     [SerializeField]
     protected float distance;
     [SerializeField]
     protected LayerMask targetLayerMask;
+
+    public void ApplyActionEffactsToTarget(Character inInstigator)
+    {
+        Character hitCharacter = getHitGameObjectOrNull(inInstigator, true);
+
+        applyActionEffactsToTarget(inInstigator, hitCharacter);
+    }
+
     public override void Initialize(ActionSystem InActionSystem, Action other = null)
     {
         base.Initialize(InActionSystem, other);
@@ -29,13 +37,13 @@ public class Action_RangedAttack : Action_AttackBase
         //getHitGameObjectOrNull(inInstigator, offset);
 
         Character hitCharacter = getHitGameObjectOrNull(inInstigator, true);
-        
+
         if (hitCharacter != null)
         {
             GameplayLibrary.ApplyDamage(inInstigator, hitCharacter, damage);
         }
 
-        applyActionEffactsToTarget(instigator, hitCharacter);
+        //applyActionEffactsToTarget(instigator, hitCharacter);
     }
     protected GameObject getHitGameObjectOrNull(Character inInstigator, Vector2 offset = default)
     {
@@ -59,7 +67,7 @@ public class Action_RangedAttack : Action_AttackBase
     protected Character getHitGameObjectOrNull(Character inInstigator, bool bIgnoreSelf = true)
     {
         Vector2 start = inInstigator.transform.position;
-        Vector2 dir = instigator.transform.right;
+        Vector2 dir = inInstigator.transform.right;
         RaycastHit2D[] hits = Physics2D.RaycastAll(start, dir, distance, targetLayerMask);
         Debug.DrawRay(start, dir * distance, Color.red, 3);
         foreach (var hit in hits)

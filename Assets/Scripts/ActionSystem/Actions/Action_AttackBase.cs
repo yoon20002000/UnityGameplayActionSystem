@@ -84,14 +84,7 @@ public class Action_AttackBase : Action
     {
         
     }
-    protected virtual void applyActionEffactsToTarget(Character inInstigator, Character targetCharacter)
-    {
-        ActionSystem targetActionSystem = targetCharacter.GetActionSystem();
-        foreach (var actionEffect in applyActionEffects)
-        {
-            targetActionSystem.AddAction(inInstigator, actionEffect);
-        }
-    }
+    
     public override void StopAction(Character inInstigator)
     {
         base.StopAction(inInstigator);

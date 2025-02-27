@@ -55,8 +55,15 @@ public class ActionEffect : Action
     {
         base.StopAction(inInstigator);
 
-        StopCoroutine(durationCo);
-        StopCoroutine(periodCo);
+        if(durationCo != null)
+        {
+            StopCoroutine(durationCo);
+        }
+        
+        if(periodCo != null)
+        {
+            StopCoroutine(periodCo);
+        }
         
         durationCo = null;
         periodCo = null;

@@ -2,6 +2,11 @@
 using UnityEngine;
 using System.Collections.Generic;
 
+public interface IApplyActionEffects
+{
+    public void ApplyActionEffactsToTarget(Character inInstigator);
+}
+
 public class Action : MonoBehaviour
 {
     public Action()
@@ -11,9 +16,16 @@ public class Action : MonoBehaviour
         cancelTags = EGameplayTags.None_Action;
         blockedTags = EGameplayTags.None_Action;
     }
+    private void Start()
+    {
+        if(applyActionEffects.Count > 0 )
+        {
+            Assert.IsTrue(this is IApplyActionEffects, "If you want to apply effect than implement IApplyActionEffects interface");
+        }
+    }
     public virtual void DeepCopy(Action other)
     {
-        Assert.IsNotNull(other, "You DeepCopy using original action resources");
+        Assert.IsNotNull(other, "In action is null");
 
         this.actionSystem = other.actionSystem;
         this.activationTag = other.activationTag;
@@ -24,6 +36,7 @@ public class Action : MonoBehaviour
         this.bAutoStart = other.bAutoStart;
         this.timeStarted = other.timeStarted;
         this.instigator = other.instigator;
+        this.bAutoStopAfterOnce = other.bAutoStopAfterOnce;
         applyActionEffects.Clear();
         applyActionEffects.AddRange(other.applyActionEffects);
     }
@@ -40,6 +53,7 @@ public class Action : MonoBehaviour
             this.bAutoStart = other.bAutoStart;
             this.timeStarted = other.timeStarted;
             this.instigator = other.instigator;
+            this.bAutoStopAfterOnce = other.bAutoStopAfterOnce;
             applyActionEffects.Clear();
             applyActionEffects.AddRange(other.applyActionEffects);
         }
@@ -100,6 +114,18 @@ public class Action : MonoBehaviour
         timeStarted = Time.time;
 
         actionSystem.OnActionStated?.Invoke(actionSystem, this);
+
+        IApplyActionEffects applyActionEffectsInterface = this as IApplyActionEffects;
+        
+        if(applyActionEffectsInterface != null)
+        {
+            applyActionEffectsInterface.ApplyActionEffactsToTarget(inInstigator);
+        }
+
+        if (bAutoStopAfterOnce == true)
+        {
+            StopAction(inInstigator);
+        }
     }
 
     public virtual void StopAction(Character inInstigator)
@@ -108,9 +134,19 @@ public class Action : MonoBehaviour
         actionSystem.UnSetActiveTags(grantsTags);
 
         bIsRunning = false;
+
         instigator = inInstigator;
 
         actionSystem.OnActionStoped?.Invoke(actionSystem, this);
+    }
+
+    protected virtual void applyActionEffactsToTarget(Character inInstigator, Character targetCharacter)
+    {
+        ActionSystem targetActionSystem = targetCharacter.GetActionSystem();
+        foreach (var actionEffect in applyActionEffects)
+        {
+            targetActionSystem.AddAction(inInstigator, actionEffect);
+        }
     }
 
     protected ActionSystem actionSystem = null;
@@ -134,7 +170,8 @@ public class Action : MonoBehaviour
 
     [SerializeField]
     protected bool bAutoStart = false;
-
+    [SerializeField]
+    protected bool bAutoStopAfterOnce = false;
     [SerializeField]
     protected List<ActionEffect> applyActionEffects = new();
 }
