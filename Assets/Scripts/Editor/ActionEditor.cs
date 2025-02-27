@@ -1,16 +1,18 @@
 ﻿using UnityEditor;
 using UnityEngine;
-[CustomEditor(typeof(Action))]
+//[CustomEditor(typeof(Action))]
 public class ActionEditor : Editor
 {
     SerializedProperty actionProperty;
     SerializedProperty grantsProperty;
+    SerializedProperty cancelProperty;
     SerializedProperty blockedProperty;
 
     private void OnEnable()
     {
         actionProperty = serializedObject.FindProperty("activationTag");
         grantsProperty = serializedObject.FindProperty("grantsTags");
+        cancelProperty = serializedObject.FindProperty("cancelTags");
         blockedProperty = serializedObject.FindProperty("blockedTags");
     }
     public override void OnInspectorGUI()
@@ -21,6 +23,7 @@ public class ActionEditor : Editor
 
         drawActiveTag(action, ref bIsDirty);
         drawGrantTags(action, ref bIsDirty);
+        drawCancelTags(action, ref bIsDirty);
         drawBlokcedTags(action, ref bIsDirty);
 
         if (bIsDirty == true)
@@ -28,7 +31,6 @@ public class ActionEditor : Editor
             serializedObject.ApplyModifiedProperties();
         }
     }
-
     protected void drawActiveTag(Action action, ref bool bIsDirty)
     {
         var selectedTag = (EGameplayTags)actionProperty.enumValueFlag;
@@ -46,6 +48,16 @@ public class ActionEditor : Editor
         if (selectedTags != newTags)
         {
             grantsProperty.enumValueFlag = (int)newTags;
+            bIsDirty = true;
+        }
+    }
+    private void drawCancelTags(Action action, ref bool bIsDirty)
+    {
+        var selectedTags = (EGameplayTags)cancelProperty.enumValueFlag;
+        var newTags = (EGameplayTags)EditorGUILayout.EnumFlagsField("Cancel Tags", selectedTags);
+        if (selectedTags != newTags)
+        {
+            cancelProperty.enumValueFlag = (int)newTags;
             bIsDirty = true;
         }
     }

@@ -1,5 +1,6 @@
 ﻿using UnityEngine.Assertions;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class Action : MonoBehaviour
 {
@@ -7,6 +8,7 @@ public class Action : MonoBehaviour
     {
         activationTag = EGameplayTags.None_Action;
         grantsTags = EGameplayTags.None_Action;
+        cancelTags = EGameplayTags.None_Action;
         blockedTags = EGameplayTags.None_Action;
     }
     public virtual void DeepCopy(Action other)
@@ -16,11 +18,14 @@ public class Action : MonoBehaviour
         this.actionSystem = other.actionSystem;
         this.activationTag = other.activationTag;
         this.grantsTags = other.grantsTags;
+        this.cancelTags = other.cancelTags;
         this.blockedTags = other.blockedTags;
         this.bIsRunning = other.bIsRunning;
         this.bAutoStart = other.bAutoStart;
         this.timeStarted = other.timeStarted;
         this.instigator = other.instigator;
+        applyActionEffects.Clear();
+        applyActionEffects.AddRange(other.applyActionEffects);
     }
     public virtual void Initialize(ActionSystem InActionSystem, Action other = null)
     {
@@ -29,11 +34,14 @@ public class Action : MonoBehaviour
         {
             this.activationTag = other.activationTag;
             this.grantsTags = other.grantsTags;
+            this.cancelTags = other.cancelTags;
             this.blockedTags = other.blockedTags;
             this.bIsRunning = other.bIsRunning;
             this.bAutoStart = other.bAutoStart;
             this.timeStarted = other.timeStarted;
             this.instigator = other.instigator;
+            applyActionEffects.Clear();
+            applyActionEffects.AddRange(other.applyActionEffects);
         }
     }
 
@@ -49,6 +57,10 @@ public class Action : MonoBehaviour
     public EGameplayTags GetGrantsTags()
     {
         return grantsTags;
+    }
+    public EGameplayTags GetCanelTags()
+    {
+        return cancelTags;
     }
     public bool GetAutoStart()
     {
@@ -92,6 +104,7 @@ public class Action : MonoBehaviour
 
     public virtual void StopAction(Character inInstigator)
     {
+        Debug.Log("Stoped action : " + this.activationTag.ToString());
         actionSystem.UnSetActiveTags(grantsTags);
 
         bIsRunning = false;
@@ -109,6 +122,8 @@ public class Action : MonoBehaviour
     [SerializeField]
     protected EGameplayTags grantsTags;
     [SerializeField]
+    protected EGameplayTags cancelTags;
+    [SerializeField]
     protected EGameplayTags blockedTags;
 
     [SerializeField]
@@ -119,4 +134,7 @@ public class Action : MonoBehaviour
 
     [SerializeField]
     protected bool bAutoStart = false;
+
+    [SerializeField]
+    protected List<ActionEffect> applyActionEffects = new();
 }

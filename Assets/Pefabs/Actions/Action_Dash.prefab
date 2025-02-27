@@ -46,4 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   activationTag: 4
   grantsTags: 384
+  cancelTags: 3
   blockedTags: 64
+  bIsRunning: 0
+  bAutoStart: 0

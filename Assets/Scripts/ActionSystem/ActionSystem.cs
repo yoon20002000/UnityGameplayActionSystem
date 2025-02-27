@@ -69,7 +69,7 @@ public class ActionSystem : MonoBehaviour
     }
     public Action GetActionOrNull(EGameplayTags actionTag)
     {
-        Assert.IsTrue(isOnlyOneTagSet(actionTag), "Multiple Action Tag in ActivationTag");
+        Assert.IsTrue(isOnlyOneTagSet(actionTag), "Multiple Action Tag in ActivationTag : " + actionTag.ToString());
 
         foreach (Action action in actions)
         {
@@ -96,6 +96,23 @@ public class ActionSystem : MonoBehaviour
             {
                 Debug.LogWarningFormat("Can not start action {0}. Instigator : {1}, GameObject : {2}", actionTag.ToString(), inInstigator.name, gameObject.name);
                 return false;
+            }
+
+            EGameplayTags cancelTags = action.GetCanelTags();
+            if(cancelTags != EGameplayTags.None_Action)
+            {
+                foreach (EGameplayTags cancelTag in Enum.GetValues(typeof(EGameplayTags)))
+                {
+                    if (cancelTag == EGameplayTags.None_Action)
+                    {
+                        continue;
+                    }
+
+                    if (cancelTags.HasFlag(cancelTag) == true)
+                    {
+                        StopActionByTag(inInstigator, cancelTag);
+                    }
+                }
             }
 
             action.StartAction(inInstigator);
@@ -143,6 +160,11 @@ public class ActionSystem : MonoBehaviour
     }
     protected bool isOnlyOneTagSet(EGameplayTags tag)
     {
+        if(tag == EGameplayTags.None_Action)
+        {
+            return true;
+        }
+
         return (tag != 0) && ((tag & (tag - 1)) == 0);
     }
     public override string ToString()

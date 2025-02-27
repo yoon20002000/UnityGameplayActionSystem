@@ -19,9 +19,6 @@ public class Action_AttackBase : Action
     [SerializeField]
     protected float duration;
 
-    [SerializeField]
-    protected List<ActionEffect> applyActionEffects = new ();
-
     protected Coroutine attackCo;
     public override void DeepCopy(Action other)
     {
@@ -40,8 +37,6 @@ public class Action_AttackBase : Action
         bIsDistributionDamage = action.bIsDistributionDamage;
         attackDelay = action.attackDelay;
         duration = action.duration;
-        applyActionEffects.Clear();
-        applyActionEffects.AddRange(action.applyActionEffects);
     }
     public override void Initialize(ActionSystem InActionSystem, Action other = null)
     {
@@ -60,8 +55,6 @@ public class Action_AttackBase : Action
         bIsDistributionDamage = action.bIsDistributionDamage;
         attackDelay = action.attackDelay;
         duration = action.duration;
-        applyActionEffects.Clear();
-        applyActionEffects.AddRange(action.applyActionEffects);
     }
     public override void StartAction(Character inInstigator)
     {
