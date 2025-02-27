@@ -4,15 +4,12 @@ public class HealthSystem : MonoBehaviour
 {
     public static readonly float MAX_HP_LIMIT = 999;
 
-    public delegate void OnValueChanged(float oldVal, float newVal);
-    public delegate void OnLiveStateChanged();
-
-    public OnValueChanged OnHealthChanged;
-    public OnValueChanged OnMaxHealthChanged;
-    public OnLiveStateChanged OnDeath;
+    public System.Action<float, float> OnHealthChanged;
+    public System.Action<float, float> OnMaxHealthChanged;
+    public System.Action OnDeath;
 
     public bool IsAlive() => hp > 0;
-
+    public float GetHPPercentage() => hp / maxHP;
     public HealthSystem()
     {
         maxHP = 100;
