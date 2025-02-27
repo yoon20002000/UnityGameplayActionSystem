@@ -46,7 +46,7 @@ public class ActionSystem : MonoBehaviour
     }
     public void RemoveAction(Action action)
     {
-        if(action.IsRunning() == true)
+        if(action.GetIsRunning() == true)
         {
             return;
         }
@@ -116,7 +116,7 @@ public class ActionSystem : MonoBehaviour
         Action action = GetActionOrNull(actionTag);
         if(action != null)
         {
-            if(action.IsRunning() == true)
+            if(action.GetIsRunning() == true)
             {
                 action.StopAction(inInstigator);
 

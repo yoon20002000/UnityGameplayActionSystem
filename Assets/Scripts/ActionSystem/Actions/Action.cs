@@ -89,14 +89,14 @@ public class Action : MonoBehaviour
     {
         bAutoStart = bInAutoStart;
     }
-    public bool IsRunning()
+    public bool GetIsRunning()
     {
         return bIsRunning;
     }
 
     public virtual bool IsCanStart(Character inInstigator)
     {
-        if (IsRunning() == true || IsCooltime() == true)
+        if (GetIsRunning() == true || GetIsCooltime() == true)
         {
             return false;
         }
@@ -109,14 +109,15 @@ public class Action : MonoBehaviour
         return true;
     }
     
-    public bool IsCooltime() => endCooltime > Time.time;
+    public bool GetIsCooltime() => endCooltime > Time.time;
     public void ResetCooltime()
     {
         endCooltime = Time.time;
     }
-    public float RemainCooltime()
+    public float GetRemainCooltime() => endCooltime - Time.time;
+    public float GetRemainPercentage()
     {
-        return endCooltime - Time.time;
+        return GetRemainCooltime() / coolTime;
     }
     public virtual void StartAction(Character inInstigator)
     {

@@ -45,9 +45,13 @@ public class Character : MonoBehaviour
     }
     private void onActionStarted(ActionSystem system, Action action)
     {
-        checkInvincibility();
+        checkCharacterState();
     }
     private void onActionStoped(ActionSystem system, Action action)
+    {
+        checkCharacterState();
+    }
+    protected void checkCharacterState()
     {
         checkInvincibility();
     }
