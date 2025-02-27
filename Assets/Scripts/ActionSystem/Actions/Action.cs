@@ -109,23 +109,25 @@ public class Action : MonoBehaviour
         return true;
     }
     
-    public bool IsCooltime() => bIsCoolingdown;
-    public void SetCollingdown(bool setCoolingdown)
+    public bool IsCooltime() => endCooltime > Time.time;
+    public void ResetCooltime()
     {
-        bIsCoolingdown = setCoolingdown;
+        endCooltime = Time.time;
     }
-
+    public float RemainCooltime()
+    {
+        return endCooltime - Time.time;
+    }
     public virtual void StartAction(Character inInstigator)
     {
         Debug.LogFormat("Start Action : {0}, Instigator : {1}", activationTag.ToString(), inInstigator.name );
         actionSystem.SetActiveTags(grantsTags);
 
-        StartCoroutine(coolingdown());
-
         bIsRunning = true;
         instigator = inInstigator;
 
         timeStarted = Time.time;
+        endCooltime = timeStarted + coolTime;
 
         IApplyActionEffects applyActionEffectsInterface = this as IApplyActionEffects;
         
@@ -149,7 +151,6 @@ public class Action : MonoBehaviour
 
         instigator = inInstigator;
     }
-
     protected virtual void applyActionEffactsToTarget(Character inInstigator, Character targetCharacter)
     {
         ActionSystem targetActionSystem = targetCharacter.GetActionSystem();
@@ -157,13 +158,6 @@ public class Action : MonoBehaviour
         {
             targetActionSystem.AddAction(inInstigator, actionEffect);
         }
-    }
-    
-    private IEnumerator coolingdown()
-    {
-        bIsCoolingdown = true;
-        yield return new WaitForSeconds(coolTime);
-        bIsCoolingdown = false;
     }
 
     protected ActionSystem actionSystem = null;
@@ -193,6 +187,7 @@ public class Action : MonoBehaviour
 
     [SerializeField]
     protected float coolTime;
+    protected float endCooltime;
     protected bool bIsCoolingdown;
     
 }
