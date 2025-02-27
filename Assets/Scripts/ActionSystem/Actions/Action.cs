@@ -1,6 +1,7 @@
 ﻿using UnityEngine.Assertions;
 using UnityEngine;
 using System.Collections.Generic;
+using System.Collections;
 
 public interface IApplyActionEffects
 {
@@ -16,6 +17,8 @@ public class Action : MonoBehaviour
         cancelTags = EGameplayTags.None_Action;
         blockedTags = EGameplayTags.None_Action;
     }
+    
+    
     private void Start()
     {
         if(applyActionEffects.Count > 0 )
@@ -37,6 +40,7 @@ public class Action : MonoBehaviour
         this.timeStarted = other.timeStarted;
         this.instigator = other.instigator;
         this.bAutoStopAfterOnce = other.bAutoStopAfterOnce;
+        this.coolTime = other.coolTime;
         applyActionEffects.Clear();
         applyActionEffects.AddRange(other.applyActionEffects);
     }
@@ -54,6 +58,7 @@ public class Action : MonoBehaviour
             this.timeStarted = other.timeStarted;
             this.instigator = other.instigator;
             this.bAutoStopAfterOnce = other.bAutoStopAfterOnce;
+            this.coolTime = other.coolTime;
             applyActionEffects.Clear();
             applyActionEffects.AddRange(other.applyActionEffects);
         }
@@ -91,10 +96,11 @@ public class Action : MonoBehaviour
 
     public virtual bool IsCanStart(Character inInstigator)
     {
-        if (IsRunning() == true)
+        if (IsRunning() == true || IsCooltime() == true)
         {
             return false;
         }
+
         if (actionSystem.ActiveTagHasAny(blockedTags))
         {
             return false;
@@ -102,11 +108,19 @@ public class Action : MonoBehaviour
 
         return true;
     }
+    
+    public bool IsCooltime() => bIsCoolingdown;
+    public void SetCollingdown(bool setCoolingdown)
+    {
+        bIsCoolingdown = setCoolingdown;
+    }
 
     public virtual void StartAction(Character inInstigator)
     {
         Debug.LogFormat("Start Action : {0}, Instigator : {1}", activationTag.ToString(), inInstigator.name );
         actionSystem.SetActiveTags(grantsTags);
+
+        StartCoroutine(coolingdown());
 
         bIsRunning = true;
         instigator = inInstigator;
@@ -144,6 +158,13 @@ public class Action : MonoBehaviour
             targetActionSystem.AddAction(inInstigator, actionEffect);
         }
     }
+    
+    private IEnumerator coolingdown()
+    {
+        bIsCoolingdown = true;
+        yield return new WaitForSeconds(coolTime);
+        bIsCoolingdown = false;
+    }
 
     protected ActionSystem actionSystem = null;
 
@@ -158,7 +179,6 @@ public class Action : MonoBehaviour
     [SerializeField]
     protected EGameplayTags blockedTags;
 
-    [SerializeField]
     protected bool bIsRunning = false;
     protected Character instigator = null;
 
@@ -170,4 +190,9 @@ public class Action : MonoBehaviour
     protected bool bAutoStopAfterOnce = false;
     [SerializeField]
     protected List<ActionEffect> applyActionEffects = new();
+
+    [SerializeField]
+    protected float coolTime;
+    protected bool bIsCoolingdown;
+    
 }

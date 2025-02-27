@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 484615527330085798}
   - component: {fileID: 8444921721874623071}
   m_Layer: 0
-  m_Name: ActionEffectBase
+  m_Name: ActionEffect_Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -48,8 +48,8 @@ MonoBehaviour:
   grantsTags: 16
   cancelTags: 0
   blockedTags: 368
-  bIsRunning: 0
   bAutoStart: 0
   bAutoStopAfterOnce: 1
   applyActionEffects:
   - {fileID: 8444921721874623071, guid: ec63832ccd3d5f34e83046c52a6063a5, type: 3}
+  coolTime: 5
