@@ -18,7 +18,7 @@ public class Player : Character
     private InputAction skill1Input;
     private InputAction skill2Input;
     private InputAction dashInput;
-
+    
     private void OnEnable()
     {
         //attackInput = inputActionAsset.FindAction("Attack");
@@ -40,7 +40,7 @@ public class Player : Character
 
     private void attackInput_Performed(InputAction.CallbackContext obj)
     {
-        actionSystem.StartActionByTag(this, GameplayTags.Action_Attack);
+        actionSystem.StartActionByTag(this, EGameplayTags.Action_Attack);
     }
     private void add_perfored(ref InputAction inputAction, string actionName,
         System.Action<InputAction.CallbackContext> performed = null, bool bIsAutoEnable = true)
@@ -90,22 +90,22 @@ public class Player : Character
     }
     private void defence_Started(InputAction.CallbackContext context)
     {
-        actionSystem.StartActionByTag(this, GameplayTags.Action_Deffence);
+        actionSystem.StartActionByTag(this, EGameplayTags.Action_Deffence);
     }
     private void defence_Canceld(InputAction.CallbackContext context)
     {
-        actionSystem.StopActionByTag(this, GameplayTags.Action_Deffence);
+        actionSystem.StopActionByTag(this, EGameplayTags.Action_Deffence);
     }
     private void skill1_Started(InputAction.CallbackContext context)
     {
-        actionSystem.StartActionByTag(this, GameplayTags.Action_Skill1);
+        actionSystem.StartActionByTag(this, EGameplayTags.Action_Skill1);
     }
     private void skill2_Started(InputAction.CallbackContext context)
     {
-        actionSystem.StartActionByTag(this, GameplayTags.Action_Skill2);
+        actionSystem.StartActionByTag(this, EGameplayTags.Action_Skill2);
     }
     private void dash_Started(InputAction.CallbackContext context)
     {
-        actionSystem.StartActionByTag(this, GameplayTags.Action_Dash);
+        actionSystem.StartActionByTag(this, EGameplayTags.Action_Dash);
     }
 }

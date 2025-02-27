@@ -5,9 +5,9 @@ public class Action : MonoBehaviour
 {
     public Action()
     {
-        activationTag = GameplayTags.None_Action;
-        grantsTags = GameplayTags.None_Action;
-        blockedTags = GameplayTags.None_Action;
+        activationTag = EGameplayTags.None_Action;
+        grantsTags = EGameplayTags.None_Action;
+        blockedTags = EGameplayTags.None_Action;
     }
     public virtual void DeepCopy(Action other)
     {
@@ -42,11 +42,11 @@ public class Action : MonoBehaviour
         return actionSystem;
     }
 
-    public GameplayTags GetActivationTag()
+    public EGameplayTags GetActivationTag()
     {
         return activationTag;
     }
-    public GameplayTags GetGrantsTags()
+    public EGameplayTags GetGrantsTags()
     {
         return grantsTags;
     }
@@ -104,12 +104,12 @@ public class Action : MonoBehaviour
 
     // editor에서 하나만 선택하게 해야 됨.
     [SerializeField]
-    protected GameplayTags activationTag;
+    protected EGameplayTags activationTag;
 
     [SerializeField]
-    protected GameplayTags grantsTags;
+    protected EGameplayTags grantsTags;
     [SerializeField]
-    protected GameplayTags blockedTags;
+    protected EGameplayTags blockedTags;
 
     [SerializeField]
     protected bool bIsRunning = false;

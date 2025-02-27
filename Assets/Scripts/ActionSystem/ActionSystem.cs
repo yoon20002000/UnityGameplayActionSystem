@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -10,7 +11,7 @@ public class ActionSystem : MonoBehaviour
     public OnActionStatedChanged OnActionStated;
     public OnActionStatedChanged OnActionStoped;
 
-    protected GameplayTags activeTags;
+    protected EGameplayTags activeTags;
 
     [SerializeField]
     protected List<Action> defaultActions;
@@ -66,7 +67,7 @@ public class ActionSystem : MonoBehaviour
         }
         return null;
     }
-    public Action GetActionOrNull(GameplayTags actionTag)
+    public Action GetActionOrNull(EGameplayTags actionTag)
     {
         Assert.IsTrue(isOnlyOneTagSet(actionTag), "Multiple Action Tag in ActivationTag");
 
@@ -79,7 +80,7 @@ public class ActionSystem : MonoBehaviour
         }
         return null;
     }
-    public bool StartActionByTag(Character inInstigator, GameplayTags actionTag)
+    public bool StartActionByTag(Character inInstigator, EGameplayTags actionTag)
     {
         Assert.IsTrue(isOnlyOneTagSet(actionTag), "Multiple Action Tag in ActivationTag");
 
@@ -101,7 +102,7 @@ public class ActionSystem : MonoBehaviour
             return true;
         }
     }
-    public bool StopActionByTag(Character inInstigator, GameplayTags actionTag)
+    public bool StopActionByTag(Character inInstigator, EGameplayTags actionTag)
     {
         Action action = GetActionOrNull(actionTag);
         if(action != null)
@@ -115,34 +116,50 @@ public class ActionSystem : MonoBehaviour
 
         return false;
     }
-    public bool ActiveTagHasAny(GameplayTags checkTags)
+    public bool ActiveTagHasAny(EGameplayTags checkTags)
     {
         return hasAny(activeTags, checkTags);
     }
-    protected bool hasAny(GameplayTags targetTags, GameplayTags checkTags)
+    protected bool hasAny(EGameplayTags targetTags, EGameplayTags checkTags)
     {
-        return (targetTags & checkTags) != GameplayTags.None_Action;
+        return (targetTags & checkTags) != EGameplayTags.None_Action;
     }
 
-    public void SetActiveTags(GameplayTags grantsTags)
+    public void SetActiveTags(EGameplayTags grantsTags)
     {
-        setTags(activeTags, grantsTags);
+        setTags(ref activeTags, grantsTags);
     }
-    public void UnSetActiveTags(GameplayTags grantsTags)
+    public void UnSetActiveTags(EGameplayTags grantsTags)
     {
-        unsetTags(activeTags, grantsTags);
+        unsetTags(ref activeTags, grantsTags);
     }
-    protected void setTags(GameplayTags targetTags, GameplayTags setTags)
+    protected void setTags(ref EGameplayTags targetTags, EGameplayTags setTags)
     {
         targetTags |= setTags;
     }
-    protected void unsetTags(GameplayTags targetTags, GameplayTags unsetTags)
+    protected void unsetTags(ref EGameplayTags targetTags, EGameplayTags unsetTags)
     {
         targetTags &= ~unsetTags;
     }
-
-    protected bool isOnlyOneTagSet(GameplayTags tag)
+    protected bool isOnlyOneTagSet(EGameplayTags tag)
     {
         return (tag != 0) && ((tag & (tag - 1)) == 0);
+    }
+    public override string ToString()
+    {
+        StringBuilder sb = new();
+        foreach(EGameplayTags tag in Enum.GetValues(typeof(EGameplayTags)))
+        {
+            if(tag == EGameplayTags.None_Action)
+            {
+                continue;
+            }
+            if(activeTags.HasFlag(tag) == true)
+            {
+                sb.AppendLine(tag.ToString());
+            }
+        }
+            
+        return sb.ToString();
     }
 }

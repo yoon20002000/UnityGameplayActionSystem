@@ -31,8 +31,8 @@ public class ActionEditor : Editor
 
     protected void drawActiveTag(Action action, ref bool bIsDirty)
     {
-        var selectedTag = (GameplayTags)actionProperty.enumValueFlag;
-        var tag = (GameplayTags)EditorGUILayout.EnumPopup("Activation Tag", selectedTag);
+        var selectedTag = (EGameplayTags)actionProperty.enumValueFlag;
+        var tag = (EGameplayTags)EditorGUILayout.EnumPopup("Activation Tag", selectedTag);
         if (selectedTag != tag)
         {
             actionProperty.enumValueFlag = (int)tag;
@@ -41,8 +41,8 @@ public class ActionEditor : Editor
     }
     protected void drawGrantTags(Action action, ref bool bIsDirty)
     {
-        var selectedTags = (GameplayTags)grantsProperty.enumValueFlag;
-        var newTags = (GameplayTags)EditorGUILayout.EnumFlagsField("Garnts Tags", selectedTags);
+        var selectedTags = (EGameplayTags)grantsProperty.enumValueFlag;
+        var newTags = (EGameplayTags)EditorGUILayout.EnumFlagsField("Garnts Tags", selectedTags);
         if (selectedTags != newTags)
         {
             grantsProperty.enumValueFlag = (int)newTags;
@@ -51,8 +51,8 @@ public class ActionEditor : Editor
     }
     protected void drawBlokcedTags(Action action, ref bool bIsDirty)
     {
-        var selectedTags = (GameplayTags)blockedProperty.enumValueFlag;
-        var newTags = (GameplayTags)EditorGUILayout.EnumFlagsField("Blocked Tags", selectedTags);
+        var selectedTags = (EGameplayTags)blockedProperty.enumValueFlag;
+        var newTags = (EGameplayTags)EditorGUILayout.EnumFlagsField("Blocked Tags", selectedTags);
         if (selectedTags != newTags)
         {
             blockedProperty.enumValueFlag = (int)newTags;

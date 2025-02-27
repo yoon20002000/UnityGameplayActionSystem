@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Text;
+using UnityEngine;
 [RequireComponent(typeof(ActionSystem))]
 [RequireComponent(typeof(HealthSystem))]
 public class Character : MonoBehaviour

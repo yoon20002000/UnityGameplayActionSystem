@@ -1,7 +1,7 @@
 ﻿using System;
 
 [Flags]
-public enum GameplayTags
+public enum EGameplayTags
 {
     None_Action                     = 0,
     Action_Attack                   = 1 << 0,
