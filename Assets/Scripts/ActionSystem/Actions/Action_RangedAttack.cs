@@ -64,7 +64,7 @@ public class Action_RangedAttack : Action_AttackBase
         Debug.DrawRay(start, dir * distance, Color.red, 3);
         foreach (var hit in hits)
         {
-            if (hit.collider.gameObject != inInstigator)
+            if (hit.collider.gameObject != inInstigator.gameObject)
             {
                 Debug.LogFormat("Hit Target : {0}", hit.collider.gameObject.name);
                 return hit.collider.gameObject.GetComponent<Character>();

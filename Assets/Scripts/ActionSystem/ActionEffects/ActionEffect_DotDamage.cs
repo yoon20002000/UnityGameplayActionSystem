@@ -17,7 +17,10 @@ public class ActionEffect_DotDamage : ActionEffect
         }
         damage = actionEffect.damage;
     }
-
+    public override bool IsCanStart(Character inInstigator)
+    {
+        return base.IsCanStart(inInstigator) == true && GetActionSystem().GetOwnerCharacter().GetHealthSystem().IsAlive() == true;
+    }
     public override void Initialize(ActionSystem InActionSystem, Action other = null)
     {
         base.Initialize(InActionSystem, other);
