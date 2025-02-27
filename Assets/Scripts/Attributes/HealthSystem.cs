@@ -21,6 +21,43 @@ public class HealthSystem : MonoBehaviour
         this.maxHP = maxHP;
     }
 
+    public void ApplyHealthChange(Character damageCauser, float damageAmount)
+    {
+        if (bIsInvincibility == true && damageAmount > 0)
+        {
+            return;
+        }
+
+        if (IsAlive() == true)
+        {
+            float curHP = hp;
+            float newHP = Mathf.Clamp(curHP - damageAmount, 0, maxHP);
+            hp = newHP;
+
+            if(OnHealthChanged != null)
+            {
+                OnHealthChanged.Invoke(curHP, newHP);
+            }
+
+            if (IsAlive() == false)
+            {
+                OnDeath.Invoke();
+            }
+            Debug.LogFormat("Damaged!! Damage Causer : {0} Amount : {1}, Cur HP : {2}", damageCauser.name, damageAmount, hp);
+        }
+    }
+    public void AddMaxHp(float addAmount)
+    {
+        float curMaxHP = maxHP;
+        float newMaxHP = Mathf.Clamp(curMaxHP + addAmount, 0, MAX_HP_LIMIT);
+        maxHP = newMaxHP;
+
+        if(OnMaxHealthChanged != null)
+        {
+            OnMaxHealthChanged.Invoke(curMaxHP, newMaxHP);
+        }
+    }
+
     private float hp;
     public float GetHP()
     {
@@ -32,30 +69,13 @@ public class HealthSystem : MonoBehaviour
     {
         return maxHP;
     }
-
-    public void ApplyHealthChange(Character damageCauser, float damageAmount)
+    private bool bIsInvincibility = false;
+    public void SetInvincibility(bool bInvincibility)
     {
-        if(IsAlive() == true)
-        {
-            float curHP = hp;
-            float newHP = Mathf.Clamp(curHP - damageAmount, 0, maxHP);
-            hp = newHP;
-
-            OnHealthChanged?.Invoke(curHP, newHP);
-
-            if (IsAlive() == false)
-            {
-                OnDeath?.Invoke();
-            }
-            Debug.LogFormat("Damaged!! Damage Causer : {0} Amount : {1}, Cur HP : {2}", damageCauser.name, damageAmount, hp);
-        }        
+        bIsInvincibility = bInvincibility;
     }
-    public void SetMaxHp(float addAmount)
+    public bool GetInvincibility()
     {
-        float curMaxHP = maxHP;
-        float newMaxHP = Mathf.Clamp(curMaxHP + addAmount,0,MAX_HP_LIMIT);
-        maxHP = newMaxHP;
-
-        OnMaxHealthChanged?.Invoke(curMaxHP, newMaxHP);
+        return bIsInvincibility;
     }
 }

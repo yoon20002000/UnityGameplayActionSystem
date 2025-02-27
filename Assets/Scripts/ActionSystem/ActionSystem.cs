@@ -6,10 +6,8 @@ using UnityEngine.Assertions;
 
 public class ActionSystem : MonoBehaviour
 {
-    public delegate void OnActionStatedChanged(ActionSystem actionSystem, Action action);
-
-    public OnActionStatedChanged OnActionStated;
-    public OnActionStatedChanged OnActionStoped;
+    public Action<ActionSystem, Action> OnActionStarted;
+    public Action<ActionSystem, Action> OnActionStoped;
 
     protected EGameplayTags activeTags;
 
@@ -54,18 +52,6 @@ public class ActionSystem : MonoBehaviour
         }
 
         actions.Remove(action);
-    }
-    [Obsolete] // 얘네는 UObject subclass bp 했을 때 cdo를 각각 생성하는게 아니라 비교 했을때 다 내가 원하는게 아니어도 그 값을 뱉음.
-    public Action GetActionOrNull(Action action)
-    {
-        foreach(Action a in actions)
-        {
-            if(a.GetType() == action.GetType())
-            {
-                return a;
-            }
-        }
-        return null;
     }
     public Action GetActionOrNull(EGameplayTags actionTag)
     {
@@ -116,6 +102,12 @@ public class ActionSystem : MonoBehaviour
             }
 
             action.StartAction(inInstigator);
+
+            if (OnActionStarted != null)
+            {
+                OnActionStarted.Invoke(this, action);
+            }
+
             return true;
         }
     }
@@ -127,6 +119,12 @@ public class ActionSystem : MonoBehaviour
             if(action.IsRunning() == true)
             {
                 action.StopAction(inInstigator);
+
+                if (OnActionStoped != null)
+                {
+                    OnActionStoped.Invoke(this, action);
+                }
+
                 return true;
             }
         }

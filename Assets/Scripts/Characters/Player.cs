@@ -20,22 +20,24 @@ public class Player : Character
     private InputAction dashInput;
     
     private void OnEnable()
-    {
-        //attackInput = inputActionAsset.FindAction("Attack");
-        //attackInput.performed += attackInput_performed;
-        //attackInput.Enable();
-
+    {        
         add_perfored(ref attackInput, ATTACK_ACTION_INPUT_NAME, attackInput_Performed);
         add_Started(ref defenceInput, DEFENCE_ACTION_INPUT_NAME, defence_Started);
         add_Canceled(ref defenceInput, DEFENCE_ACTION_INPUT_NAME, defence_Canceld);
         add_Started(ref skill1Input, SKILL1_ACTION_INPUT_NAME, skill1_Started);
         add_Started(ref skill2Input, SKILL2_ACTION_INPUT_NAME, skill2_Started);
         add_Started(ref dashInput, DASH_ACTION_INPUT_NAME, dash_Started);
+        bindActionChanged();
     }
 
     private void OnDisable()
     {
         attackInput.Disable();
+        unBindActionChanged();
+    }
+    private void OnDestroy()
+    {
+        unBindActionChanged();
     }
 
     private void attackInput_Performed(InputAction.CallbackContext obj)

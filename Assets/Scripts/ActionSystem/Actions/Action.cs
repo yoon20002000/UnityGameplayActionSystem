@@ -113,8 +113,6 @@ public class Action : MonoBehaviour
 
         timeStarted = Time.time;
 
-        actionSystem.OnActionStated?.Invoke(actionSystem, this);
-
         IApplyActionEffects applyActionEffectsInterface = this as IApplyActionEffects;
         
         if(applyActionEffectsInterface != null)
@@ -136,8 +134,6 @@ public class Action : MonoBehaviour
         bIsRunning = false;
 
         instigator = inInstigator;
-
-        actionSystem.OnActionStoped?.Invoke(actionSystem, this);
     }
 
     protected virtual void applyActionEffactsToTarget(Character inInstigator, Character targetCharacter)
