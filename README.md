@@ -1,11 +1,12 @@
-# 작업 기간 2025/02/25 ~ 2025/02/28
-
+# 주제
 UE의 GameplayAbilitySystem을 모방 하여 제작 한 시스템 UnityActionSystem
 기본 GameplayTag는 Enum으로 대체
 
 Action을 이용하여 기능 추가. ActionEffect를 이용해 캐릭터간의 상호작용 추가
 Enum으로 만든 EGameplayTag를 기반으로 Action 처리
 
+# 작업 기간 : 2025/02/25 ~ 2025/02/28
+## 환경 : Unity6 / VS2022
 
 # Action
 Activation Tag : Action의 Unique 확인용 Tag 해당 Tag를 이용해 Action 적용 가능.
