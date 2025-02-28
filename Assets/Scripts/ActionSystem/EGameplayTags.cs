@@ -15,4 +15,8 @@ public enum EGameplayTags
     Status_Dashing                  = 1 << 8,
     Status_Bleeding                 = 1 << 9,
     Action_Skill2                   = 1 << 10,
+    Action_Aim                      = 1 << 11,
+    Status_Aimimg                   = 1 << 12,
+    Status_Moving                   = 1 << 13,
+    
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -13,11 +14,14 @@ public class Player : Character
     private readonly static string SKILL1_ACTION_INPUT_NAME = "Skill1";
     private readonly static string SKILL2_ACTION_INPUT_NAME = "Skill2";
     private readonly static string DASH_ACTION_INPUT_NAME = "Dash";
+    private readonly static string AIM_ACTION_INPUT_NAME = "Aim";
+    
     private InputAction attackInput;
     private InputAction defenceInput;
     private InputAction skill1Input;
     private InputAction skill2Input;
     private InputAction dashInput;
+    private InputAction aimInput;
     
     private void OnEnable()
     {        
@@ -27,8 +31,11 @@ public class Player : Character
         add_Started(ref skill1Input, SKILL1_ACTION_INPUT_NAME, skill1_Started);
         add_Started(ref skill2Input, SKILL2_ACTION_INPUT_NAME, skill2_Started);
         add_Started(ref dashInput, DASH_ACTION_INPUT_NAME, dash_Started);
+        add_Started(ref aimInput, AIM_ACTION_INPUT_NAME, aim_Started);
+        add_Canceled(ref aimInput, AIM_ACTION_INPUT_NAME, aim_Canceld);
         bindActionChanged();
     }
+
 
     private void OnDisable()
     {
@@ -109,5 +116,13 @@ public class Player : Character
     private void dash_Started(InputAction.CallbackContext context)
     {
         actionSystem.StartActionByTag(this, EGameplayTags.Action_Dash);
+    }
+    private void aim_Started(InputAction.CallbackContext context)
+    {
+        actionSystem.StartActionByTag(this, EGameplayTags.Action_Aim);
+    }
+    private void aim_Canceld(InputAction.CallbackContext context)
+    {
+        actionSystem.StopActionByTag(this, EGameplayTags.Action_Aim);
     }
 }
