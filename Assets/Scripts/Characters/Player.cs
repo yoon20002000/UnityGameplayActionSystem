@@ -1,7 +1,5 @@
-﻿using NUnit.Framework;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,7 +7,7 @@ public class Player : Character
 {
     private void Awake()
     {
-        Assert.IsNotNull(aimCinemachineCamera, "Aim Cinemachin Camera is not setted!!! : " + this.gameObject.name);
+        
     }
     private void OnEnable()
     {        
@@ -22,11 +20,15 @@ public class Player : Character
         add_Started(ref aimInput, AIM_ACTION_INPUT_NAME, aim_Started);
         add_Canceled(ref aimInput, AIM_ACTION_INPUT_NAME, aim_Canceld);
 
+        add_perfored(ref lookInput, LOOK_ACTION_INPUT_NAME, look_Performed);
+
         add_perfored(ref moveInput, MOVE_ACTION_INPUT_NAME, moveInput_Performed);
         add_Canceled(ref moveInput, MOVE_ACTION_INPUT_NAME, moveInput_Canceld);
 
         bindActionChanged();
     }
+
+   
 
     private void FixedUpdate()
     {
@@ -115,13 +117,27 @@ public class Player : Character
     }
     private void aim_Started(InputAction.CallbackContext context)
     {
-        aimCinemachineCamera.gameObject.SetActive(true);
+        mainCamera.fieldOfView = aimFOV;
         actionSystem.StartActionByTag(this, EGameplayTags.Action_Aim);
     }
     private void aim_Canceld(InputAction.CallbackContext context)
     {
-        aimCinemachineCamera.gameObject.SetActive(false);
+        mainCamera.fieldOfView = normalFOV;
         actionSystem.StopActionByTag(this, EGameplayTags.Action_Aim);
+    }
+
+    private void look_Performed(InputAction.CallbackContext context)
+    {
+        //Vector2 lookInput = context.ReadValue<Vector2>();
+
+        //float mouseX = lookInput.x * mouseSensitivity;
+        //float mouseY = lookInput.y * mouseSensitivity;
+
+        //verticalRotation -= mouseY;
+        //verticalRotation = Mathf.Clamp(verticalRotation, minVerticalAngle, maxVerticalAngle);
+
+        //mainCamera.transform.localRotation = Quaternion.Euler(verticalRotation, 0, 0);
+        //transform.Rotate(Vector3.up * mouseX);
     }
     private void moveInput_Performed(InputAction.CallbackContext context)
     {
@@ -139,7 +155,7 @@ public class Player : Character
         Vector3 moveDirection = new Vector3( moveInputValue.x , 0, moveInputValue.y);
         moveDirection.y = 0;
         rb.MovePosition(rb.position + moveDirection.normalized * moveSpeed * Time.fixedDeltaTime);
-        //this.transform.forward = moveDirection;
+        this.transform.forward = moveDirection;
     }
     private void aiming()
     {
@@ -156,6 +172,7 @@ public class Player : Character
     private readonly static string DASH_ACTION_INPUT_NAME = "Dash";
     private readonly static string AIM_ACTION_INPUT_NAME = "Aim";
     private readonly static string MOVE_ACTION_INPUT_NAME = "Move";
+    private readonly static string LOOK_ACTION_INPUT_NAME = "Look";
 
     private InputAction attackInput;
     private InputAction defenceInput;
@@ -164,15 +181,26 @@ public class Player : Character
     private InputAction dashInput;
     private InputAction aimInput;
     private InputAction moveInput;
+    private InputAction lookInput;
 
+    [Header("Movement & Rigidbody")]
     private Vector2 moveInputValue;
     [SerializeField]
     private float moveSpeed = 50.0f;
     [SerializeField]
     private Rigidbody rb;
 
+    [Header("Camera")]
     [SerializeField]
-    private CinemachineCamera freeLookCinemachineCamera;
+    private Camera mainCamera;
     [SerializeField]
-    private CinemachineCamera aimCinemachineCamera;
+    private float aimFOV = 30;
+    [SerializeField]
+    private float normalFOV = 60;
+    [SerializeField]
+    private float mouseSensitivity = 2f;
+    public float minVerticalAngle = -45f;
+    public float maxVerticalAngle = 75f;
+
+    private float verticalRotation = 0f;
 }
