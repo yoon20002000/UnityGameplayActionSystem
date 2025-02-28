@@ -12,10 +12,17 @@ public class Character : MonoBehaviour
     {
         return healthSystem;
     }
-    private void Start()
+    private void Awake()
     {
-        healthSystem = GetComponent<HealthSystem>();
-        actionSystem = GetComponent<ActionSystem>();
+        if(healthSystem == null)
+        {
+            healthSystem = GetComponent<HealthSystem>();
+        }
+            
+        if(actionSystem == null)
+        {
+            actionSystem = GetComponent<ActionSystem>();
+        }
     }
     private void OnEnable()
     {
