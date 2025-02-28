@@ -15,14 +15,20 @@ public class Player : Character
     private readonly static string SKILL2_ACTION_INPUT_NAME = "Skill2";
     private readonly static string DASH_ACTION_INPUT_NAME = "Dash";
     private readonly static string AIM_ACTION_INPUT_NAME = "Aim";
-    
+    private readonly static string MOVE_ACTION_INPUT_NAME = "Move";
     private InputAction attackInput;
     private InputAction defenceInput;
     private InputAction skill1Input;
     private InputAction skill2Input;
     private InputAction dashInput;
     private InputAction aimInput;
-    
+    private InputAction moveInput;
+
+    private Vector2 moveInputValue;
+    [SerializeField]
+    private float moveSpeed = 50.0f;
+    [SerializeField]
+    private Rigidbody rb;
     private void OnEnable()
     {        
         add_perfored(ref attackInput, ATTACK_ACTION_INPUT_NAME, attackInput_Performed);
@@ -33,9 +39,19 @@ public class Player : Character
         add_Started(ref dashInput, DASH_ACTION_INPUT_NAME, dash_Started);
         add_Started(ref aimInput, AIM_ACTION_INPUT_NAME, aim_Started);
         add_Canceled(ref aimInput, AIM_ACTION_INPUT_NAME, aim_Canceld);
+        
+        add_perfored(ref moveInput, MOVE_ACTION_INPUT_NAME, moveInput_Performed);
+        add_Canceled(ref moveInput, MOVE_ACTION_INPUT_NAME, moveInput_Canceld);
+
         bindActionChanged();
     }
 
+    
+
+    private void FixedUpdate()
+    {
+        move();
+    }
 
     private void OnDisable()
     {
@@ -124,5 +140,23 @@ public class Player : Character
     private void aim_Canceld(InputAction.CallbackContext context)
     {
         actionSystem.StopActionByTag(this, EGameplayTags.Action_Aim);
+    }
+    private void moveInput_Performed(InputAction.CallbackContext context)
+    {
+        moveInputValue = context.ReadValue<Vector2>();
+        actionSystem.SetActiveTags(EGameplayTags.Status_Moving);
+    }
+
+    private void moveInput_Canceld(InputAction.CallbackContext context)
+    {
+        moveInputValue = Vector2.zero;
+        actionSystem.UnSetActiveTags(EGameplayTags.Status_Moving);
+    }
+    private void move()
+    {
+        Vector3 moveDirection = new Vector3( moveInputValue.x , 0, moveInputValue.y);
+        moveDirection.y = 0;
+        rb.MovePosition(rb.position + moveDirection.normalized * moveSpeed * Time.fixedDeltaTime);
+        this.transform.forward = moveDirection;
     }
 }
