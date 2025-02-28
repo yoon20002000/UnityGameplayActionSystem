@@ -11,8 +11,10 @@ public class Action_RangedAttack : Action_AttackBase, IApplyActionEffects
     public void ApplyActionEffactsToTarget(Character inInstigator)
     {
         Character hitCharacter = getHitGameObjectOrNull(inInstigator, true);
-
-        applyActionEffactsToTarget(inInstigator, hitCharacter);
+        if(hitCharacter != null)
+        {
+            applyActionEffactsToTarget(inInstigator, hitCharacter);
+        }
     }
 
     public override void Initialize(ActionSystem InActionSystem, Action other = null)

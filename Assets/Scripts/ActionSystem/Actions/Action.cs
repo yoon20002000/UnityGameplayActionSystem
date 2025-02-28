@@ -154,7 +154,19 @@ public class Action : MonoBehaviour
     }
     protected virtual void applyActionEffactsToTarget(Character inInstigator, Character targetCharacter)
     {
+        if(targetCharacter == null)
+        {
+            Debug.LogError("Target Character is null!! " + activationTag.ToString());
+            return;
+        }
+
         ActionSystem targetActionSystem = targetCharacter.GetActionSystem();
+        
+        if(targetActionSystem == null)
+        {
+            return;
+        }
+
         foreach (var actionEffect in applyActionEffects)
         {
             targetActionSystem.AddAction(inInstigator, actionEffect);
