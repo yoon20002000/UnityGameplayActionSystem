@@ -157,6 +157,10 @@ public class Player : Character
         Vector3 moveDirection = new Vector3( moveInputValue.x , 0, moveInputValue.y);
         moveDirection.y = 0;
         rb.MovePosition(rb.position + moveDirection.normalized * moveSpeed * Time.fixedDeltaTime);
-        this.transform.forward = moveDirection;
+        //this.transform.forward = moveDirection;
+    }
+    private void aiming()
+    {
+
     }
 }
