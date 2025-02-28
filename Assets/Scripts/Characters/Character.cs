@@ -2,18 +2,20 @@
 [RequireComponent(typeof(ActionSystem))]
 [RequireComponent(typeof(HealthSystem))]
 public class Character : MonoBehaviour
-{
-    [SerializeField]
-    protected ActionSystem actionSystem;
+{   
     public ActionSystem GetActionSystem()
     {
         return actionSystem;
     }
-    [SerializeField]
-    protected HealthSystem healthSystem;
+    
     public HealthSystem GetHealthSystem()
     {
         return healthSystem;
+    }
+    private void Start()
+    {
+        healthSystem = GetComponent<HealthSystem>();
+        actionSystem = GetComponent<ActionSystem>();
     }
     private void OnEnable()
     {
@@ -60,4 +62,7 @@ public class Character : MonoBehaviour
         bool bIsInvincibility = actionSystem.ActiveTagHasAny(EGameplayTags.Status_Invincibility);
         healthSystem.SetInvincibility(bIsInvincibility);
     }
+
+    protected ActionSystem actionSystem;
+    protected HealthSystem healthSystem;
 }
