@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using Unity.Cinemachine;
 using UnityEngine;
@@ -6,29 +7,10 @@ using UnityEngine.InputSystem;
 
 public class Player : Character
 {
-    [SerializeField]
-    private InputActionAsset inputActionAsset;
-
-    private readonly static string ATTACK_ACTION_INPUT_NAME = "Attack";
-    private readonly static string DEFENCE_ACTION_INPUT_NAME = "Defence";
-    private readonly static string SKILL1_ACTION_INPUT_NAME = "Skill1";
-    private readonly static string SKILL2_ACTION_INPUT_NAME = "Skill2";
-    private readonly static string DASH_ACTION_INPUT_NAME = "Dash";
-    private readonly static string AIM_ACTION_INPUT_NAME = "Aim";
-    private readonly static string MOVE_ACTION_INPUT_NAME = "Move";
-    private InputAction attackInput;
-    private InputAction defenceInput;
-    private InputAction skill1Input;
-    private InputAction skill2Input;
-    private InputAction dashInput;
-    private InputAction aimInput;
-    private InputAction moveInput;
-
-    private Vector2 moveInputValue;
-    [SerializeField]
-    private float moveSpeed = 50.0f;
-    [SerializeField]
-    private Rigidbody rb;
+    private void Awake()
+    {
+        Assert.IsNotNull(aimCinemachineCamera, "Aim Cinemachin Camera is not setted!!! : " + this.gameObject.name);
+    }
     private void OnEnable()
     {        
         add_perfored(ref attackInput, ATTACK_ACTION_INPUT_NAME, attackInput_Performed);
@@ -39,14 +21,12 @@ public class Player : Character
         add_Started(ref dashInput, DASH_ACTION_INPUT_NAME, dash_Started);
         add_Started(ref aimInput, AIM_ACTION_INPUT_NAME, aim_Started);
         add_Canceled(ref aimInput, AIM_ACTION_INPUT_NAME, aim_Canceld);
-        
+
         add_perfored(ref moveInput, MOVE_ACTION_INPUT_NAME, moveInput_Performed);
         add_Canceled(ref moveInput, MOVE_ACTION_INPUT_NAME, moveInput_Canceld);
 
         bindActionChanged();
     }
-
-    
 
     private void FixedUpdate()
     {
@@ -135,10 +115,12 @@ public class Player : Character
     }
     private void aim_Started(InputAction.CallbackContext context)
     {
+        aimCinemachineCamera.gameObject.SetActive(true);
         actionSystem.StartActionByTag(this, EGameplayTags.Action_Aim);
     }
     private void aim_Canceld(InputAction.CallbackContext context)
     {
+        aimCinemachineCamera.gameObject.SetActive(false);
         actionSystem.StopActionByTag(this, EGameplayTags.Action_Aim);
     }
     private void moveInput_Performed(InputAction.CallbackContext context)
@@ -163,4 +145,34 @@ public class Player : Character
     {
 
     }
+
+    [SerializeField]
+    private InputActionAsset inputActionAsset;
+
+    private readonly static string ATTACK_ACTION_INPUT_NAME = "Attack";
+    private readonly static string DEFENCE_ACTION_INPUT_NAME = "Defence";
+    private readonly static string SKILL1_ACTION_INPUT_NAME = "Skill1";
+    private readonly static string SKILL2_ACTION_INPUT_NAME = "Skill2";
+    private readonly static string DASH_ACTION_INPUT_NAME = "Dash";
+    private readonly static string AIM_ACTION_INPUT_NAME = "Aim";
+    private readonly static string MOVE_ACTION_INPUT_NAME = "Move";
+
+    private InputAction attackInput;
+    private InputAction defenceInput;
+    private InputAction skill1Input;
+    private InputAction skill2Input;
+    private InputAction dashInput;
+    private InputAction aimInput;
+    private InputAction moveInput;
+
+    private Vector2 moveInputValue;
+    [SerializeField]
+    private float moveSpeed = 50.0f;
+    [SerializeField]
+    private Rigidbody rb;
+
+    [SerializeField]
+    private CinemachineCamera freeLookCinemachineCamera;
+    [SerializeField]
+    private CinemachineCamera aimCinemachineCamera;
 }
