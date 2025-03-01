@@ -1,14 +1,34 @@
-﻿using UnityEngine;
+﻿using Unity.Cinemachine;
+using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.InputSystem;
 
 public class Player : Character
 {
+    public override Ray GetShotRay()
+    {
+        CinemachineBrain brain = Camera.main.GetComponent<CinemachineBrain>();
+        Camera curCamera = brain.OutputCamera;
+        
+        if(curCamera != null)
+        {
+            
+            return curCamera.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
+        }
+        else
+        {
+            Debug.LogError("Aim Camera is not setted!!!!!");
+        }
+
+        return default;
+    }
     private void Awake()
     {
         if(uiCanvas.activeSelf == true)
         {
             uiCanvas.SetActive(false);
         }
+        Assert.IsNotNull(cameraRig, "Aim Camera rig is not setted.");
     }
     private void OnEnable()
     {        
@@ -109,16 +129,16 @@ public class Player : Character
     }
     private void dash_Started(InputAction.CallbackContext context)
     {
-        uiCanvas.SetActive(true);
         actionSystem.StartActionByTag(this, EGameplayTags.Action_Dash);
     }
     private void aim_Started(InputAction.CallbackContext context)
     {
-        uiCanvas.SetActive(false);
+        uiCanvas.SetActive(true);
         actionSystem.StartActionByTag(this, EGameplayTags.Action_Aim);
     }
     private void aim_Canceld(InputAction.CallbackContext context)
     {
+        uiCanvas.SetActive(false);
         actionSystem.StopActionByTag(this, EGameplayTags.Action_Aim);
     }
     private void moveInput_Performed(InputAction.CallbackContext context)
@@ -152,4 +172,6 @@ public class Player : Character
 
     [SerializeField]
     private GameObject uiCanvas;
+    [SerializeField]
+    private AimCameraRig cameraRig;
 }

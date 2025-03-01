@@ -2,7 +2,16 @@
 [RequireComponent(typeof(ActionSystem))]
 [RequireComponent(typeof(HealthSystem))]
 public class Character : MonoBehaviour
-{   
+{
+    public Transform GetShotTransform()
+    {
+        return shotTransform;
+
+    }
+    public virtual Ray GetShotRay()
+    {
+        return default;
+    }
     public ActionSystem GetActionSystem()
     {
         return actionSystem;
@@ -73,4 +82,7 @@ public class Character : MonoBehaviour
     protected ActionSystem actionSystem;
     [SerializeField]
     protected HealthSystem healthSystem;
+
+    [SerializeField]
+    protected Transform shotTransform;
 }

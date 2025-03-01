@@ -7,6 +7,11 @@ public class AimCameraRig : CinemachineCameraManagerBase, Unity.Cinemachine.IInp
 {
     public InputAxis AimMode = InputAxis.DefaultMomentary;
 
+    public CinemachineVirtualCameraBase GetCurLiveCamera()
+    {
+        return (CinemachineVirtualCameraBase)LiveChild;
+    }
+
     AimController AimController;
     CinemachineVirtualCameraBase AimCamera;
     CinemachineVirtualCameraBase FreeCamera;

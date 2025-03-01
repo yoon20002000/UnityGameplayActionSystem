@@ -194,7 +194,7 @@
                     "id": "6d44f683-4e1a-4988-97fe-3f1c6855bd39",
                     "path": "<Mouse>/delta",
                     "interactions": "",
-                    "processors": "InvertVector2(invertX=false),ScaleVector2(x=0.05,y=0.05)",
+                    "processors": "ScaleVector2(x=0.1,y=0.1),DeltaTimeScale",
                     "groups": ";Keyboard&Mouse",
                     "action": "Look",
                     "isComposite": false,

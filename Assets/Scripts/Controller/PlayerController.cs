@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.PlayerLoop;
 public abstract class PlayerControllerBase : MonoBehaviour, Unity.Cinemachine.IInputAxisOwner
 {
     [Tooltip("Ground speed when walking")]
     public float Speed = 6f;
-    
+
     public System.Action PreUpdate;
     public System.Action<Vector3, float> PostUpdate;
     public System.Action StartJump;
@@ -66,16 +64,8 @@ public class PlayerController : PlayerControllerBase
     [Tooltip("Layers to include in ground detection via Raycasts.")]
     public LayerMask GroundLayers = 1;
 
-    [Tooltip("Force of gravity in the down direction (m/s^2)")]
-    public float Gravity = 10;
-
-    const float kDelayBeforeInferringJump = 0.3f;
-    float m_TimeLastGrounded = 0;
-
     Vector3 m_CurrentVelocityXZ;
     Vector3 m_LastInput;
-    
-    bool m_IsSprinting;
 
     // These are part of a strategy to combat input gimbal lock when controlling a player
     // that can move freely on surfaces that go upside-down relative to the camera.
@@ -89,22 +79,17 @@ public class PlayerController : PlayerControllerBase
 
     public override void SetStrafeMode(bool b) => Strafe = b;
     public override bool IsMoving => m_LastInput.sqrMagnitude > 0.01f;
-
-    public bool IsSprinting => m_IsSprinting;
     public Camera Camera => CameraOverride == null ? Camera.main : CameraOverride;
 
-    public bool IsGrounded() => GetDistanceFromGround(transform.position, UpDirection, 10) < 0.01f; 
+    public bool IsGrounded() => GetDistanceFromGround(transform.position, UpDirection, 10) < 0.01f;
 
     private void OnEnable()
     {
-        m_IsSprinting = false;
-        m_TimeLastGrounded = Time.time;
     }
 
     void Update()
     {
         PreUpdate?.Invoke();
-
 
         // Get the reference frame for the input
         var rawInput = new Vector3(MoveX.Value, 0, MoveZ.Value);
@@ -116,20 +101,16 @@ public class PlayerController : PlayerControllerBase
         if (m_LastInput.sqrMagnitude > 1)
             m_LastInput.Normalize();
 
-        // Compute the new velocity and move the player, but only if not mid-jump
-        
-        {
-            m_IsSprinting = true;
-            var desiredVelocity = m_LastInput * Speed;
-            var damping = Damping;
-            if (Vector3.Angle(m_CurrentVelocityXZ, desiredVelocity) < 100)
-                m_CurrentVelocityXZ = Vector3.Slerp(
-                    m_CurrentVelocityXZ, desiredVelocity,
-                    Damper.Damp(1, damping, Time.deltaTime));
-            else
-                m_CurrentVelocityXZ += Damper.Damp(
-                    desiredVelocity - m_CurrentVelocityXZ, damping, Time.deltaTime);
-        }
+        var desiredVelocity = m_LastInput * Speed;
+
+        if (Vector3.Angle(m_CurrentVelocityXZ, desiredVelocity) < 100)
+            m_CurrentVelocityXZ = Vector3.Slerp(
+                m_CurrentVelocityXZ, desiredVelocity,
+                Damper.Damp(1, Damping, Time.deltaTime));
+        else
+            m_CurrentVelocityXZ += Damper.Damp(
+                desiredVelocity - m_CurrentVelocityXZ, Damping, Time.deltaTime);
+
 
         // Apply the position change
         ApplyMotion();
@@ -142,8 +123,7 @@ public class PlayerController : PlayerControllerBase
             var qB = Quaternion.LookRotation(
                 (InputForward == ForwardModes.Player && Vector3.Dot(fwd, m_CurrentVelocityXZ) < 0)
                     ? -m_CurrentVelocityXZ : m_CurrentVelocityXZ, UpDirection);
-            var damping = Damping;
-            transform.rotation = Quaternion.Slerp(qA, qB, Damper.Damp(1, damping, Time.deltaTime));
+            transform.rotation = Quaternion.Slerp(qA, qB, Damper.Damp(1, Damping, Time.deltaTime));
         }
 
         if (PostUpdate != null)
@@ -227,20 +207,18 @@ public class PlayerController : PlayerControllerBase
 
     void ApplyMotion()
     {
-        {
-            var pos = transform.position + m_CurrentVelocityXZ * Time.deltaTime;
+        var pos = transform.position + m_CurrentVelocityXZ * Time.deltaTime;
 
-            // Don't fall below ground
-            var up = UpDirection;
-            var altitude = GetDistanceFromGround(pos, up, 10);
+        // Don't fall below ground
+        var up = UpDirection;
+        var altitude = GetDistanceFromGround(pos, up, 10);
 
-            transform.position = pos ;
-        }
+        transform.position = pos;
     }
 
     float GetDistanceFromGround(Vector3 pos, Vector3 up, float max)
     {
-        float kExtraHeight =  0; // start a little above the player in case it's moving down fast
+        float kExtraHeight = 0; // start a little above the player in case it's moving down fast
         if (Physics.Raycast(pos + up * kExtraHeight, -up, out var hit,
                 max + kExtraHeight, GroundLayers, QueryTriggerInteraction.Ignore))
             return hit.distance - kExtraHeight;

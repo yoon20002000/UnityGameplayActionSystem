@@ -1,17 +1,18 @@
 ﻿using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.UIElements;
 
 public class Action_RangedAttack : Action_AttackBase, IApplyActionEffects
 {
     [SerializeField]
-    protected float distance;
+    protected float maxRange;
     [SerializeField]
     protected LayerMask targetLayerMask;
 
     public void ApplyActionEffactsToTarget(Character inInstigator)
     {
         Character hitCharacter = getHitGameObjectOrNull(inInstigator, true);
-        if(hitCharacter != null)
+        if (hitCharacter != null)
         {
             applyActionEffactsToTarget(inInstigator, hitCharacter);
         }
@@ -27,7 +28,7 @@ public class Action_RangedAttack : Action_AttackBase, IApplyActionEffects
         {
             return;
         }
-        distance = action.distance;
+        maxRange = action.maxRange;
         targetLayerMask = action.targetLayerMask;
     }
     protected override void attackDelayElapsed(Character inInstigator)
@@ -47,39 +48,30 @@ public class Action_RangedAttack : Action_AttackBase, IApplyActionEffects
 
         //applyActionEffactsToTarget(instigator, hitCharacter);
     }
-    protected GameObject getHitGameObjectOrNull(Character inInstigator, Vector2 offset = default)
+    protected Character getHitGameObjectOrNull(Character inInstigator, bool bIgnoreSelf = true)
     {
-        Vector2 start = inInstigator.transform.position;
-        start += offset;
-        Vector2 dir = instigator.transform.right;
-        Vector2 end = start + dir * distance;
+        Vector3 start = inInstigator.GetShotTransform().position;
+        // 현재는 플레이어 한정
+        Ray ray = inInstigator.GetShotRay();
 
-        RaycastHit2D hit = Physics2D.Raycast(start, dir, distance, targetLayerMask);
-        Debug.DrawRay(start, dir * distance, Color.red, 5);
+        RaycastHit hit;
+        Vector3 targetPoint;
 
-        if(hit)
+        if (Physics.Raycast(ray, out hit, maxRange))
         {
-            return hit.collider.gameObject;
+            targetPoint = hit.point; // 충돌한 지점
+            Vector3 shootDirection = (targetPoint - start).normalized;
+            Debug.DrawRay(start, shootDirection * maxRange, Color.red, 1f);
+
+            return hit.collider.gameObject.GetComponent<Character>();
         }
         else
         {
+            targetPoint = ray.origin + ray.direction * maxRange; // 최대 거리까지 쏘기
+            Vector3 shootDirection = (targetPoint - start).normalized;
+            Debug.DrawRay(start, shootDirection * maxRange, Color.red, 1f);
+
             return null;
         }
-    }
-    protected Character getHitGameObjectOrNull(Character inInstigator, bool bIgnoreSelf = true)
-    {
-        Vector2 start = inInstigator.transform.position;
-        Vector2 dir = inInstigator.transform.right;
-        RaycastHit2D[] hits = Physics2D.RaycastAll(start, dir, distance, targetLayerMask);
-        Debug.DrawRay(start, dir * distance, Color.red, 3);
-        foreach (var hit in hits)
-        {
-            if (hit.collider.gameObject != inInstigator.gameObject)
-            {
-                Debug.LogFormat("Hit Target : {0}", hit.collider.gameObject.name);
-                return hit.collider.gameObject.GetComponent<Character>();
-            }
-        }
-        return null;
     }
 }

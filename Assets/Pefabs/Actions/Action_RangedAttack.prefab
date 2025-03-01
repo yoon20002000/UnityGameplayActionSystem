@@ -46,17 +46,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   activationTag: 1
   grantsTags: 16
+  cancelTags: 0
   blockedTags: 352
-  bIsRunning: 0
   bAutoStart: 0
+  bAutoStopAfterOnce: 0
+  applyActionEffects:
+  - {fileID: -6822794030201258381, guid: e45342947db8939489dd56861a767471, type: 3}
+  coolTime: 0
   damage: 10
   count: 1
   bIsDistributionDamage: 0
   attackDelay: 0
   duration: 0
-  applyActionEffects:
-  - {fileID: -6822794030201258381, guid: e45342947db8939489dd56861a767471, type: 3}
-  distance: 10
+  maxRange: 100
   targetLayerMask:
     serializedVersion: 2
     m_Bits: 64
