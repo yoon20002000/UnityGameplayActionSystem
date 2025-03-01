@@ -32,7 +32,7 @@ public class Player : Character
 
     private void FixedUpdate()
     {
-        move();
+        //move();
     }
 
     private void OnDisable()
@@ -117,12 +117,12 @@ public class Player : Character
     }
     private void aim_Started(InputAction.CallbackContext context)
     {
-        mainCamera.fieldOfView = aimFOV;
+        //mainCamera.fieldOfView = aimFOV;
         actionSystem.StartActionByTag(this, EGameplayTags.Action_Aim);
     }
     private void aim_Canceld(InputAction.CallbackContext context)
     {
-        mainCamera.fieldOfView = normalFOV;
+        //mainCamera.fieldOfView = normalFOV;
         actionSystem.StopActionByTag(this, EGameplayTags.Action_Aim);
     }
 
