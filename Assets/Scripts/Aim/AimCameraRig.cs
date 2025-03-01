@@ -2,7 +2,7 @@
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.Rendering;
-
+[ExecuteAlways]
 public class AimCameraRig : CinemachineCameraManagerBase, Unity.Cinemachine.IInputAxisOwner
 {
     public InputAxis AimMode = InputAxis.DefaultMomentary;
