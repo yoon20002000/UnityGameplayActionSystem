@@ -7,25 +7,65 @@ public class AimCameraRig : CinemachineCameraManagerBase, Unity.Cinemachine.IInp
 {
     public InputAxis AimMode = InputAxis.DefaultMomentary;
 
-    [SerializeField]
-    private CinemachineVirtualCameraBase aimCamera;
-    [SerializeField]
-    private CinemachineVirtualCameraBase freeCamera;
+    AimController AimController;
+    CinemachineVirtualCameraBase AimCamera;
+    CinemachineVirtualCameraBase FreeCamera;
 
     bool IsAiming => AimMode.Value > 0.5f;
-    public void GetInputAxes(List<IInputAxisOwner.AxisDescriptor> axes)
+
+    /// Report the available input axes to the input axis controller.
+    /// We use the Input Axis Controller because it works with both the Input package
+    /// and the Legacy input system.  This is sample code and we
+    /// want it to work everywhere.
+    void IInputAxisOwner.GetInputAxes(List<IInputAxisOwner.AxisDescriptor> axes)
     {
-        axes.Add(new() { DrivenAxis = () =>ref AimMode, Name = "Aim" });
+        axes.Add(new() { DrivenAxis = () => ref AimMode, Name = "Aim" });
+    }
+
+    protected override void Start()
+    {
+        base.Start();
+
+        // Find the player and the aiming camera.
+        // We expect to have one camera with a CinemachineThirdPersonAim component
+        // whose Follow target is a player with a SimplePlayerAimController child.
+        for (int i = 0; i < ChildCameras.Count; ++i)
+        {
+            var cam = ChildCameras[i];
+            if (!cam.isActiveAndEnabled)
+                continue;
+            if (AimCamera == null
+                && cam.TryGetComponent<CinemachineThirdPersonAim>(out var aim)
+                && aim.NoiseCancellation)
+            {
+                AimCamera = cam;
+                var player = AimCamera.Follow;
+                if (player != null)
+                    AimController = player.GetComponentInChildren<AimController>();
+            }
+            else if (FreeCamera == null)
+                FreeCamera = cam;
+        }
+        if (AimCamera == null)
+            Debug.LogError("AimCameraRig: no valid CinemachineThirdPersonAim camera found among children");
+        if (AimController == null)
+            Debug.LogError("AimCameraRig: no valid SimplePlayerAimController target found");
+        if (FreeCamera == null)
+            Debug.LogError("AimCameraRig: no valid non-aiming camera found among children");
     }
 
     protected override CinemachineVirtualCameraBase ChooseCurrentCamera(Vector3 worldUp, float deltaTime)
     {
-        CinemachineVirtualCameraBase oldCam = (CinemachineVirtualCameraBase)LiveChild;
-        CinemachineVirtualCameraBase newCam = IsAiming ? aimCamera : freeCamera;
-        if(oldCam != newCam)
+        var oldCam = (CinemachineVirtualCameraBase)LiveChild;
+        var newCam = IsAiming ? AimCamera : FreeCamera;
+        if (AimController != null && oldCam != newCam)
         {
-            // 바라보는거 세팅을 해줘야 됨.
-            Debug.Log("바라봐");
+            // Set the mode of the player aim controller.
+            // We want the player rotation to be copuled to the camera when aiming, otherwise not.
+            AimController.PlayerRotation = IsAiming
+                ? AimController.CouplingMode.Coupled
+                : AimController.CouplingMode.Decoupled;
+            AimController.RecenterPlayer();
         }
         return newCam;
     }
