@@ -7,14 +7,8 @@ using UnityEngine.PlayerLoop;
 public abstract class PlayerControllerBase : MonoBehaviour, Unity.Cinemachine.IInputAxisOwner
 {
     [Tooltip("Ground speed when walking")]
-    public float Speed = 1f;
-    [Tooltip("Ground speed when sprinting")]
-    public float SprintSpeed = 4;
-    [Tooltip("Initial vertical speed when jumping")]
-    public float JumpSpeed = 4;
-    [Tooltip("Initial vertical speed when sprint-jumping")]
-    public float SprintJumpSpeed = 6;
-
+    public float Speed = 6f;
+    
     public System.Action PreUpdate;
     public System.Action<Vector3, float> PostUpdate;
     public System.Action StartJump;
@@ -126,7 +120,7 @@ public class PlayerController : PlayerControllerBase
         
         {
             m_IsSprinting = true;
-            var desiredVelocity = m_LastInput * (m_IsSprinting ? SprintSpeed : Speed);
+            var desiredVelocity = m_LastInput * Speed;
             var damping = Damping;
             if (Vector3.Angle(m_CurrentVelocityXZ, desiredVelocity) < 100)
                 m_CurrentVelocityXZ = Vector3.Slerp(
@@ -156,7 +150,7 @@ public class PlayerController : PlayerControllerBase
         {
             // Get local-space velocity
             var vel = Quaternion.Inverse(transform.rotation) * m_CurrentVelocityXZ;
-            PostUpdate(vel, m_IsSprinting ? JumpSpeed / SprintJumpSpeed : 1);
+            PostUpdate(vel, 1);
         }
     }
 

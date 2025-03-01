@@ -1,13 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using Unity.Cinemachine;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class Player : Character
 {
     private void Awake()
     {
+        if(uiCanvas.activeSelf == true)
+        {
+            uiCanvas.SetActive(false);
+        }
     }
     private void OnEnable()
     {        
@@ -108,10 +109,12 @@ public class Player : Character
     }
     private void dash_Started(InputAction.CallbackContext context)
     {
+        uiCanvas.SetActive(true);
         actionSystem.StartActionByTag(this, EGameplayTags.Action_Dash);
     }
     private void aim_Started(InputAction.CallbackContext context)
     {
+        uiCanvas.SetActive(false);
         actionSystem.StartActionByTag(this, EGameplayTags.Action_Aim);
     }
     private void aim_Canceld(InputAction.CallbackContext context)
@@ -146,4 +149,7 @@ public class Player : Character
     private InputAction dashInput;
     private InputAction aimInput;
     private InputAction moveInput;
+
+    [SerializeField]
+    private GameObject uiCanvas;
 }
