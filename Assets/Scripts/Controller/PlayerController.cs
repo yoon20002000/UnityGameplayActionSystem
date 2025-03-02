@@ -19,10 +19,6 @@ public abstract class PlayerControllerBase : MonoBehaviour, Unity.Cinemachine.II
     [Tooltip("Z Axis movement.  Value is -1..1. Controls the forward movement")]
     public InputAxis MoveZ = InputAxis.DefaultMomentary;
 
-    [Header("Events")]
-    [Tooltip("This event is sent when the player lands after a jump.")]
-    public UnityEvent Landed = new();
-
     /// Report the available input axes to the input axis controller.
     /// We use the Input Axis Controller because it works with both the Input package
     /// and the Legacy input system.  This is sample code and we

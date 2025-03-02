@@ -78,6 +78,7 @@ public class Character : MonoBehaviour
         bool bIsInvincibility = actionSystem.ActiveTagHasAny(EGameplayTags.Status_Invincibility);
         healthSystem.SetInvincibility(bIsInvincibility);
     }
+
     [SerializeField]
     protected ActionSystem actionSystem;
     [SerializeField]

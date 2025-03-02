@@ -141,6 +141,7 @@ public class Player : Character
         uiCanvas.SetActive(false);
         actionSystem.StopActionByTag(this, EGameplayTags.Action_Aim);
     }
+    
     private void moveInput_Performed(InputAction.CallbackContext context)
     {
         actionSystem.SetActiveTags(EGameplayTags.Status_Moving);
