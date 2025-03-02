@@ -52,11 +52,22 @@ MonoBehaviour:
   bAutoStopAfterOnce: 0
   applyActionEffects: []
   coolTime: 0
-  animationDatas:
+  startAnimationDatas:
     boolData:
       AnimationDatas:
       - Key: Shot
         Value: 1
+    floatData:
+      AnimationDatas: []
+    stringData:
+      AnimationDatas: []
+    intData:
+      AnimationDatas: []
+  stopAnimationDatas:
+    boolData:
+      AnimationDatas:
+      - Key: Shot
+        Value: 0
     floatData:
       AnimationDatas: []
     stringData:

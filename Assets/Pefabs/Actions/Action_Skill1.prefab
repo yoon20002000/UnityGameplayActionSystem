@@ -53,3 +53,25 @@ MonoBehaviour:
   applyActionEffects:
   - {fileID: -6822794030201258381, guid: e45342947db8939489dd56861a767471, type: 3}
   coolTime: 3
+  startAnimationDatas:
+    boolData:
+      AnimationDatas: []
+    floatData:
+      AnimationDatas: []
+    stringData:
+      AnimationDatas:
+      - Key: Skill1
+        Value: Skill1
+    intData:
+      AnimationDatas: []
+  stopAnimationDatas:
+    boolData:
+      AnimationDatas: []
+    floatData:
+      AnimationDatas: []
+    stringData:
+      AnimationDatas:
+      - Key: Skill1
+        Value: Skill1
+    intData:
+      AnimationDatas: []
