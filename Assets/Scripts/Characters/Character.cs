@@ -3,6 +3,8 @@
 [RequireComponent(typeof(HealthSystem))]
 public class Character : MonoBehaviour
 {
+    public virtual Animator GetAnimatorOrNull() => null;
+    
     public Transform GetShotTransform()
     {
         return shotTransform;

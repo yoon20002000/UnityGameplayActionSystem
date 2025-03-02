@@ -5,6 +5,10 @@ using UnityEngine.InputSystem;
 
 public class Player : Character
 {
+    public override Animator GetAnimatorOrNull()
+    {
+        return animator;
+    }
     public override Ray GetShotRay()
     {
         CinemachineBrain brain = Camera.main.GetComponent<CinemachineBrain>();
@@ -175,4 +179,6 @@ public class Player : Character
     private GameObject uiCanvas;
     [SerializeField]
     private AimCameraRig cameraRig;
+    [SerializeField]
+    private Animator animator;
 }

@@ -43,6 +43,8 @@ public class Action : MonoBehaviour
         this.coolTime = other.coolTime;
         applyActionEffects.Clear();
         applyActionEffects.AddRange(other.applyActionEffects);
+        startAnimationDatas = other.startAnimationDatas;
+        stopAnimationDatas = other.stopAnimationDatas;
     }
     public virtual void Initialize(ActionSystem InActionSystem, Action other = null)
     {
@@ -61,6 +63,8 @@ public class Action : MonoBehaviour
             this.coolTime = other.coolTime;
             applyActionEffects.Clear();
             applyActionEffects.AddRange(other.applyActionEffects);
+            startAnimationDatas = other.startAnimationDatas;
+            stopAnimationDatas = other.stopAnimationDatas;
         }
     }
 
@@ -129,6 +133,7 @@ public class Action : MonoBehaviour
 
         timeStarted = Time.time;
         endCooltime = timeStarted + coolTime;
+        applyStartAnimation(inInstigator.GetAnimatorOrNull());
 
         IApplyActionEffects applyActionEffectsInterface = this as IApplyActionEffects;
         
@@ -147,8 +152,10 @@ public class Action : MonoBehaviour
     {
         Debug.Log("Stoped action : " + this.activationTag.ToString());
         actionSystem.UnSetActiveTags(grantsTags);
-
+        
         bIsRunning = false;
+        
+        applyStopAnimationData(inInstigator.GetAnimatorOrNull());
 
         instigator = inInstigator;
     }
@@ -170,6 +177,43 @@ public class Action : MonoBehaviour
         foreach (var actionEffect in applyActionEffects)
         {
             targetActionSystem.AddAction(inInstigator, actionEffect);
+        }
+    }
+
+    protected void applyStartAnimation(Animator targetAnimator)
+    {
+        applyAnimationData(targetAnimator, ref startAnimationDatas);
+    }
+    protected void applyStopAnimationData(Animator targetAnimator)
+    {
+        applyAnimationData(targetAnimator, ref stopAnimationDatas);
+    }
+
+    protected void applyAnimationData(Animator targetAnimator, ref AnimationDatas animationDatas)
+    {
+        if (targetAnimator == null)
+        {
+            return;
+        }
+
+        foreach (var animData in animationDatas.boolData.AnimationDatas)
+        {
+            targetAnimator.SetBool(animData.Key, animData.Value);
+        }
+
+        foreach (var animData in animationDatas.intData.AnimationDatas)
+        {
+            targetAnimator.SetInteger(animData.Key, animData.Value);
+        }
+
+        foreach (var animData in animationDatas.floatData.AnimationDatas)
+        {
+            targetAnimator.SetFloat(animData.Key, animData.Value);
+        }
+
+        foreach (var animData in animationDatas.stringData.AnimationDatas)
+        {
+            targetAnimator.SetTrigger(animData.Key);
         }
     }
 
@@ -202,5 +246,9 @@ public class Action : MonoBehaviour
     protected float coolTime;
     protected float endCooltime;
     protected bool bIsCoolingdown;
-    
+
+    [SerializeField]
+    protected AnimationDatas startAnimationDatas;
+    [SerializeField]
+    protected AnimationDatas stopAnimationDatas;
 }

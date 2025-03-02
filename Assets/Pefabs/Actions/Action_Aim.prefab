@@ -52,3 +52,25 @@ MonoBehaviour:
   bAutoStopAfterOnce: 0
   applyActionEffects: []
   coolTime: 0
+  startAnimationDatas:
+    boolData:
+      AnimationDatas:
+      - Key: Aiming
+        Value: 1
+    floatData:
+      AnimationDatas: []
+    stringData:
+      AnimationDatas: []
+    intData:
+      AnimationDatas: []
+  stopAnimationDatas:
+    boolData:
+      AnimationDatas:
+      - Key: Aiming
+        Value: 0
+    floatData:
+      AnimationDatas: []
+    stringData:
+      AnimationDatas: []
+    intData:
+      AnimationDatas: []

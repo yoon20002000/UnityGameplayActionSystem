@@ -1695,6 +1695,7 @@ MonoBehaviour:
   animationController: {fileID: 661957360}
   playerController: {fileID: 1025609578}
   targetTransform: {fileID: 1025609574}
+  testClip: {fileID: 0}
 --- !u!1 &700263567
 GameObject:
   m_ObjectHideFlags: 0
@@ -2611,6 +2612,7 @@ MonoBehaviour:
   inputActionAsset: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   uiCanvas: {fileID: 619231133}
   cameraRig: {fileID: 1388567197}
+  animator: {fileID: 661957360}
 --- !u!114 &1025609578
 MonoBehaviour:
   m_ObjectHideFlags: 0

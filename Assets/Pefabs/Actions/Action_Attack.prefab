@@ -46,12 +46,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   activationTag: 1
   grantsTags: 16
+  cancelTags: 0
   blockedTags: 368
-  bIsRunning: 0
   bAutoStart: 0
+  bAutoStopAfterOnce: 0
+  applyActionEffects: []
+  coolTime: 0
+  animationDatas:
+    boolData:
+      AnimationDatas:
+      - Key: Shot
+        Value: 1
+    floatData:
+      AnimationDatas: []
+    stringData:
+      AnimationDatas: []
+    intData:
+      AnimationDatas: []
   damage: 0
   count: 0
   bIsDistributionDamage: 0
   attackDelay: 0
   duration: 0
-  applyActionEffects: []
