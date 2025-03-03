@@ -6,6 +6,8 @@
 ## Action을 이용하여 기능 추가.  
 ## ActionEffect를 이용해 캐릭터간의 상호작용 추가.  
 
+![Example Image](./ReadmeResource/Total.gif)
+
 # 작업 기간 : 2025/02/25 ~ 2025/03/02 (6일)
 ## 환경 : Unity6 / VS2022
 
