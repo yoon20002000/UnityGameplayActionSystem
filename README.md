@@ -1,22 +1,21 @@
 # 주제
 
+## UE의 GameplayAbilitySystem을 모방 하여 제작 한 시스템 UnityActionSystem  
+## 기본 GameplayTag는 Enum으로 대체  
 
-UE의 GameplayAbilitySystem을 모방 하여 제작 한 시스템 UnityActionSystem  
-기본 GameplayTag는 Enum으로 대체  
-
-Action을 이용하여 기능 추가. ActionEffect를 이용해 캐릭터간의 상호작용 추가  
-
+## Action을 이용하여 기능 추가.  
+## ActionEffect를 이용해 캐릭터간의 상호작용 추가.  
 
 # 작업 기간 : 2025/02/25 ~ 2025/03/02 (6일)
 ## 환경 : Unity6 / VS2022
 
 # 주요 기능 요약
 ## Player의 현재 Active 된 GameplayTag들을 기반으로 상호작용 및 Action을 관리
-ex)  Defence중 Attack을 하지 못하게 설정 하는 Case
-Defence 중에는 Status_Defencing이 켜져있음. Attack을 실행하려고 체크 시 Attack에 Blocked로 설정 해 둔 Status_Defencing에 의해 Start를 못하도록 Block
+## ex)  Defence중 Attack을 하지 못하게 설정 하는 Case  
+## Defence 중에는 Status_Defencing이 켜져있음.
+## Attack을 실행하려고 체크 시 Attack에 Blocked로 설정 해 둔 Status_Defencing에 의해 Start를 못하도록 Block
 
 ![Example Image](./ReadmeResource/Defence.png)![Example Image](./ReadmeResource/Attack%20Base.png)  
-
 
 # Action
 ![Example Image](./ReadmeResource/Action.png)  
@@ -59,3 +58,6 @@ Unity InputSystem에 Bind 된 Key 설명 UI
 현재 캐릭터에게 부여된 Tag들을 상단에서 표시  
 스킬 쿨타임 UI : 남아있는 시간을 확인하며 UI 갱신
 ![Example Image](./ReadmeResource/Skill%20Cooltime%20UI.gif)
+
+# 프로젝트 링크
+# [Github](https://github.com/yoon20002000/UnityGameplayActionSystem)
