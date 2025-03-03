@@ -1,7 +1,6 @@
-﻿using NUnit.Framework;
-using System;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.UI;
 
 public class UI_CharacterPlate : MonoBehaviour
