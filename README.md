@@ -115,8 +115,8 @@ Unity InputSystem에 Bind 된 Key 설명 UI
 HealthSystem에서 실질적인 Update가 일어 날 때 처리 되도록 주체에 관찰자들을 등록해 UI가 Update 되도록 옵저버 패턴을 적용.
 ![Example Image](./ReadmeResource/UI%20Code2.png)
 ![Example Image](./ReadmeResource/UI%20Code3.png)
-![Example Image](./ReadmeResource/UI%20Code1.png)
-현재 캐릭터에게 부여된 Tag들을 상단에서 표시  
+![Example Image](./ReadmeResource/UI%20Code1.png)  
+현재 캐릭터에게 부여된 Tag들을 좌측에 표시  
 스킬 쿨타임 UI : 남아있는 시간을 확인하며 UI 갱신
 ![Example Image](./ReadmeResource/Skill%20Cooltime%20UI.gif)
 
