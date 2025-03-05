@@ -112,7 +112,7 @@ ActionEffect_Invincibility : 무적 효과 : 적용 Target의 체력 감소 효�
 ![Example Image](./ReadmeResource/Main.png)
 Unity InputSystem에 Bind 된 Key 설명 UI  
 캐랙터들의 name과 HP Update를 적용 
-HealthSystem에서 실질적인 Update가 일어 날 때 처리 되도록 주체에 관찰자들을 등록해 UI가 Update 되도록 옵저버 패턴을 적용.
+HealthSystem에서 실질적인 Update가 일어 날 때 처리 되도록 System.Action에 Add Listner 하여 Event 기반 Update를 이용해 UI를 Update.
 ![Example Image](./ReadmeResource/UI%20Code2.png)
 ![Example Image](./ReadmeResource/UI%20Code3.png)
 ![Example Image](./ReadmeResource/UI%20Code1.png)  
