@@ -1,15 +1,39 @@
 # 주제
 
-## UE의 GameplayAbilitySystem을 모방 하여 제작 한 시스템 UnityActionSystem  
-## 기본 GameplayTag는 Enum으로 대체  
-
-## Action을 이용하여 기능 추가.  
-## ActionEffect를 이용해 캐릭터간의 상호작용 추가.  
-
-![Example Image](./ReadmeResource/Total.gif)
+## UE의 GameplayAbilitySystem(GAS)을 모방 하여 제작 한 시스템 UnityActionSystem  
+UE의 GAS Plugin은 컴포넌트 기반 아키택쳐(CBD)와 이벤트 기반 프로그래밍, 데이터 중심 설계의 조합으로 
+캐릭터의 기능과 이 기능의 상호작용을 데이터 중심적으로 관리하며, 재사용성이 높으면서도 확장성이 좋은 프레임 워크 임.
+본 프로젝트는 GAS에서 캐릭터의 행동과 이를 제어하는 시스템을 모방하여 제작하였음.
+ 
+캐릭터의 행동을 카테고리별로 정의하고 이를 Component로 적용하여 데이터에 해당하는 변수들을 세팅하도록 개발.
+수치 값만 바꿔 밸런싱이 가능한 데이터 중심적 설계 적용.
+캐릭터의 행동에 의한 상호작용을 상태 보유 여부에 따라 처리하도록 개발.  
 
 # 작업 기간 : 2025/02/25 ~ 2025/03/02 (6일)
 ## 환경 : Unity6 / VS2022
+
+![Example Image](./ReadmeResource/Total.gif)
+
+## 주요 Class UML
+### Character
+![Example Image](./ReadmeResource/Character%20UML.png)
+### Action
+![Example Image](./ReadmeResource/Action%20UML.png)
+### Action Effect
+![Example Image](./ReadmeResource/ActionEffect%20UML.png)
+
+## Action이 ActionSystem을 통해 처리 되는 기본 로직
+
+// Action의 Unique성을 알 수 있는 Tag로 Action 실행  
+- StartActionByTag  
+ // Start 하려는 Tag의 Action 실행 가능 여부 확인인
+  - if isCanStart == false return  
+ // Start 하려는 action의 tag에서 취소하도록 정의 한 tag들의 action 취소 처리  
+  - stop actions by start action cancel tags  
+ // 새로 들어온 aciton 실행  
+  - start action  
+ // 실행 후 바로 해제가 필요한 action은 해제 처리  
+  - if AutoStopAfterOnce == true StopAction  
 
 # 주요 기능 요약
 ## Player의 현재 Active 된 GameplayTag들을 기반으로 상호작용 및 Action을 관리
