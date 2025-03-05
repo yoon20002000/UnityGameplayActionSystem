@@ -39,7 +39,7 @@ public class HealthSystem : MonoBehaviour
                 OnHealthChanged.Invoke(curHP, newHP);
             }
 
-            if (IsAlive() == false)
+            if (OnDeath != null && IsAlive() == false)
             {
                 OnDeath.Invoke();
             }

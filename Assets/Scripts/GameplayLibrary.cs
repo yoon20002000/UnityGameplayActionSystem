@@ -4,11 +4,13 @@ public class GameplayLibrary
 {
     public static void ApplyDamage(Character damageCauser, Character targetActor, float damageAmount)
     {
-        HealthSystem targetHealthSystem = targetActor.GetComponent<HealthSystem>();
-
-        if (targetHealthSystem != null)
+        if(targetActor == null)
         {
-            targetHealthSystem.ApplyHealthChange(damageCauser, damageAmount);
+            return;
         }
+
+        HealthSystem targetHealthSystem = targetActor.GetHealthSystem();
+
+        targetHealthSystem.ApplyHealthChange(damageCauser, damageAmount);
     }
 }
