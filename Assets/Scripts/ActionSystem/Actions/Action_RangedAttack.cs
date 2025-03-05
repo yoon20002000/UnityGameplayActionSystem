@@ -9,7 +9,7 @@ public class Action_RangedAttack : Action_AttackBase, IApplyActionEffects
     [SerializeField]
     protected LayerMask targetLayerMask;
 
-    public void ApplyActionEffactsToTarget(Character inInstigator)
+    public void ApplyActionEffectsToTarget(Character inInstigator)
     {
         Character hitCharacter = getHitGameObjectOrNull(inInstigator, true);
         if (hitCharacter != null)

@@ -5,7 +5,7 @@ using System.Collections;
 
 public interface IApplyActionEffects
 {
-    public void ApplyActionEffactsToTarget(Character inInstigator);
+    public void ApplyActionEffectsToTarget(Character inInstigator);
 }
 
 public class Action : MonoBehaviour
@@ -139,7 +139,7 @@ public class Action : MonoBehaviour
         
         if(applyActionEffectsInterface != null)
         {
-            applyActionEffectsInterface.ApplyActionEffactsToTarget(inInstigator);
+            applyActionEffectsInterface.ApplyActionEffectsToTarget(inInstigator);
         }
 
         if (bAutoStopAfterOnce == true)
