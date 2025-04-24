@@ -13,13 +13,14 @@ public class ActionSystem : MonoBehaviour
     protected List<ActionData> defaultActions;
 
     private Dictionary<EGameplayTags, ActionInstance> actions = new();
+    private List<ActionInstance> activeGameEffects = new();
     private EGameplayTags activeTags;
     private Character character;
 
     private void Start()
     {
         character = GetComponent<Character>();
-
+        activeGameEffects.Clear();
         foreach (var data in defaultActions)
         {
             AddAction(character, data);
@@ -63,6 +64,7 @@ public class ActionSystem : MonoBehaviour
     }
     public bool StopActionByTag(Character instigator, EGameplayTags tag)
     {
+        Assert.IsTrue(tag != EGameplayTags.None_Action);
         if(actions.TryGetValue(tag, out var instance) && instance.IsRunning)
         {
             instance.Stop(instigator);
@@ -73,6 +75,28 @@ public class ActionSystem : MonoBehaviour
             return true;
         }
         return false;
+    }
+    public void ApplyGameEffect(Character instigator, ActionData data)
+    {
+        ActionInstance instance = data.CreateInstacne(this);
+        activeGameEffects.Add(instance);
+
+        instance.Start(instigator);
+        if (OnActionStarted != null)
+        {
+            OnActionStarted.Invoke(this, instance);
+        }
+    }
+    public void RemoveGameEffect(Character instigator, ActionInstance effectInstance)
+    {
+        if(activeGameEffects.Remove(effectInstance))
+        {
+            effectInstance.Stop(instigator);
+            if (OnActionStoped != null)
+            {
+                OnActionStoped.Invoke(this, effectInstance);
+            }
+        }
     }
     public Character GetOwnerCharacter()
     {

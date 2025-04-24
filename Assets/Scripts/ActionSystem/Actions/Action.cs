@@ -20,7 +20,7 @@ public class Action : MonoBehaviour
     {
         if(applyActionEffects.Count > 0 )
         {
-            Assert.IsTrue(this is IApplyActionEffects, "If you want to apply effect than implement IApplyActionEffects interface");
+            Assert.IsTrue(this is IApplyActionEffectsSomeTarget, "If you want to apply effect than implement IApplyActionEffects interface");
         }
     }
     public virtual void DeepCopy(Action other)
@@ -132,7 +132,7 @@ public class Action : MonoBehaviour
         endCooltime = timeStarted + coolTime;
         applyStartAnimation(inInstigator.GetAnimatorOrNull());
 
-        IApplyActionEffects applyActionEffectsInterface = this as IApplyActionEffects;
+        IApplyActionEffectsSomeTarget applyActionEffectsInterface = this as IApplyActionEffectsSomeTarget;
         
         if(applyActionEffectsInterface != null)
         {

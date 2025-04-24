@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Action_SelfBuffBase : Action, IApplyActionEffects
+public class Action_SelfBuffBase : Action, IApplyActionEffectsSomeTarget
 {
     public void ApplyActionEffectsToTarget(Character inInstigator)
     {

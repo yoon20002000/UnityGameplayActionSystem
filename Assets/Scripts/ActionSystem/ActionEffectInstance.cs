@@ -33,8 +33,9 @@ public class ActionEffectInstance : ActionInstance
     }
     public override void Stop(Character instigator)
     {
-        base.Stop(instigator);
-        if(periodCo != null)
+        DefaultStop(instigator);
+
+        if (periodCo != null)
         {
             actionSystem.StopCoroutine(periodCo);
         }
@@ -43,6 +44,9 @@ public class ActionEffectInstance : ActionInstance
         {
             actionSystem.StopCoroutine(durationCo);
         }
+
+        durationCo = null;
+        periodCo = null;
     }
 
     private IEnumerator PeriodicEffect(Character instigator)
@@ -57,7 +61,7 @@ public class ActionEffectInstance : ActionInstance
     private IEnumerator EndAfterDuration(Character instigator)
     {
         yield return Awaitable.WaitForSecondsAsync(Duration);
-        Stop(instigator);
+        actionSystem.RemoveGameEffect(instigator, this);
     }
     protected virtual void ExecuteEffect(Character instigator)
     {
@@ -86,7 +90,7 @@ public class ActionEffectInstance : ActionInstance
     }
     private void ApplyHeal(Character instigator, ActionEffectData effectData)
     {
-        // targetCharacter.Heal(effectData.value);
+        GameplayLibrary.ApplyDamage(instigator, actionSystem.GetOwnerCharacter(), -effectData.value);
     }
 
     private void ApplyDamage(Character instigator, ActionEffectData effectData)
@@ -94,8 +98,8 @@ public class ActionEffectInstance : ActionInstance
         GameplayLibrary.ApplyDamage(instigator, actionSystem.GetOwnerCharacter(), effectData.value);
     }
 
-    private void ApplyBuff(Character targetCharacter, ActionEffectData effectData)
+    private void ApplyBuff(Character instigator, ActionEffectData effectData)
     {
-        //targetCharacter.ApplyBuff(effectData.value);
+        
     }
 }

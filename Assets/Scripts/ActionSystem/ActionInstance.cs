@@ -39,23 +39,28 @@ public class ActionInstance
 
         actionSystem.SetActiveTags(Data.GrantsTags);
         ApplyStartAnimation(instigator);
-        ApplyEffects();
+        
+        IApplyActionEffectsSomeTarget applyActionEffectsInterface = this as IApplyActionEffectsSomeTarget;
+
+        if (applyActionEffectsInterface != null)
+        {
+            applyActionEffectsInterface.ApplyActionEffectsToTarget(instigator);
+        }
+        else
+        {
+            ApplyEffects();
+        }
+
         if (Data.bAutoStop)
         {
-            Stop(instigator);
+            actionSystem.StopActionByTag(instigator, Data.ActivationTag);
         }
     }
     public virtual void Stop(Character instigator)
     {
-        if (!IsRunning)
-        {
-            return;
-        }
+        DefaultStop(instigator);
 
-        IsRunning = false;
-        actionSystem.UnSetActiveTags(Data.GrantsTags);
-        ApplyStopAnimation(Instigator);
-        Instigator = instigator;
+        actionSystem.StopActionByTag(instigator, Data.ActivationTag);
     }
     public bool IsCoolingdown() => Time.time < EndCooldown;
 
@@ -63,7 +68,7 @@ public class ActionInstance
     {
         foreach (var effect in Data.ApplyActionEffects)
         {
-            //actionSystem.AddAction(Instigator, effect);
+            actionSystem.ApplyGameEffect(Instigator, effect);
         }
     }
     private void ApplyStartAnimation(Character character) => ApplyAnimation(character.GetAnimatorOrNull(), Data.StartAnimations);
@@ -97,6 +102,18 @@ public class ActionInstance
     {
         Value = data.value;
     }
+    protected void DefaultStop(Character instigator)
+    {
+        if (!IsRunning)
+        {
+            return;
+        }
+
+        IsRunning = false;
+        actionSystem.UnSetActiveTags(Data.GrantsTags);
+        ApplyStopAnimation(Instigator);
+        Instigator = instigator;
+    }
 
     protected virtual void ApplyActionEffectsToTarget(Character instigator, Character targetCharacter)
     {
@@ -116,7 +133,7 @@ public class ActionInstance
 
         foreach (var actionEffect in Data.ApplyActionEffects)
         {
-            targetActionSystem.AddAction(instigator, actionEffect);
+            targetActionSystem.ApplyGameEffect(instigator, actionEffect);
         }
     }
 }

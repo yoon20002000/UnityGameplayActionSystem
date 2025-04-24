@@ -1,7 +1,8 @@
 ﻿using UnityEngine.Assertions;
 using System.Collections;
 using UnityEngine;
-
+using System;
+[Obsolete("ActionEffectInstance대체 작업 중")]
 public class ActionEffect : Action
 {
     public ActionEffect() : base()

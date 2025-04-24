@@ -20,7 +20,8 @@ MonoBehaviour:
   bAutoStop: 1
   value: 0
   CoolTime: 5
-  ApplyActionEffects: []
+  ApplyActionEffects:
+  - {fileID: 11400000, guid: ef72b7249ba701544b406eac565a59bb, type: 2}
   StartAnimations:
     boolData:
       AnimationDatas: []

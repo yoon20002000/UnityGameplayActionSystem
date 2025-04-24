@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class RangedAttackActionInstance : AttackActionInstance, IApplyActionEffects
+public class RangedAttackActionInstance : AttackActionInstance, IApplyActionEffectsSomeTarget
 {
     public RangedAttackActionInstance(ActionData data, ActionSystem system) : base(data, system)
     {

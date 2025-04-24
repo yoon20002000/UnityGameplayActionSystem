@@ -78,6 +78,7 @@ public class Character : MonoBehaviour
     private void checkInvincibility()
     {
         bool bIsInvincibility = actionSystem.ActiveTagHasAny(EGameplayTags.Status_Invincibility);
+
         healthSystem.SetInvincibility(bIsInvincibility);
     }
 

@@ -28,7 +28,7 @@ public class AttackActionInstance : ActionInstance
         if(Data is AttackActionData attackData)
         {
             yield return Awaitable.WaitForSecondsAsync(attackData.duration - attackDelay);
-            Stop(instigator);
+            actionSystem.StopActionByTag(instigator, Data.ActivationTag);
         }
     }
 

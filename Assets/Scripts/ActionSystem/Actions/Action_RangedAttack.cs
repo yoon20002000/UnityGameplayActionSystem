@@ -2,7 +2,7 @@
 using UnityEngine.Assertions;
 using UnityEngine.UIElements;
 
-public class Action_RangedAttack : Action_AttackBase, IApplyActionEffects
+public class Action_RangedAttack : Action_AttackBase, IApplyActionEffectsSomeTarget
 {
     [SerializeField]
     protected float maxRange;
