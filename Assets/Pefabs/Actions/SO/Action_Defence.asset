@@ -15,7 +15,7 @@ MonoBehaviour:
   ActivationTag: 2
   GrantsTags: 32
   CancelTags: 0
-  BlockedTags: 5
+  BlockedTags: 4101
   bAutoStart: 0
   bAutoStop: 0
   value: 0

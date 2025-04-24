@@ -18,6 +18,7 @@ MonoBehaviour:
   BlockedTags: 480
   bAutoStart: 0
   bAutoStop: 0
+  value: 0
   CoolTime: 0
   ApplyActionEffects: []
   StartAnimations:

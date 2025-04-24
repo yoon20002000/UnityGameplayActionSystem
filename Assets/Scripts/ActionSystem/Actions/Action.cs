@@ -2,12 +2,9 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
+using System;
 
-public interface IApplyActionEffects
-{
-    public void ApplyActionEffectsToTarget(Character inInstigator);
-}
-
+[Obsolete("ActionInstance로 대체 작업 중")]
 public class Action : MonoBehaviour
 {
     public Action()
