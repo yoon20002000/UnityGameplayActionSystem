@@ -20,9 +20,9 @@ public class UI_Cooltime : MonoBehaviour
     }
     private void Update()
     {
-        if(targetActionSystem != null && targetActionSystem.GetActionOrNull(targetActionTag) != null)
-        {
-            cooldownIconImage.fillAmount = 1 - targetActionSystem.GetActionOrNull(targetActionTag).GetRemainPercentage();
-        }
+        //if(targetActionSystem != null && targetActionSystem.GetActionOrNull(targetActionTag) != null)
+        //{
+        //    cooldownIconImage.fillAmount = 1 - targetActionSystem.GetActionOrNull(targetActionTag).GetRemainPercentage();
+        //}
     }
 }

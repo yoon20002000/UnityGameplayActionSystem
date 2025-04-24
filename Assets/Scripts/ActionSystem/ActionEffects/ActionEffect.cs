@@ -68,7 +68,7 @@ public class ActionEffect : Action
         durationCo = null;
         periodCo = null;
 
-        actionSystem.RemoveAction(this);
+        //actionSystem.RemoveAction(this);
     }
 
     public float GetRemainingTime()

@@ -63,11 +63,11 @@ public class Character : MonoBehaviour
             actionSystem.OnActionStoped -= onActionStoped;
         }
     }
-    private void onActionStarted(ActionSystem system, Action action)
+    private void onActionStarted(ActionSystem system, ActionInstance action)
     {
         checkCharacterState();
     }
-    private void onActionStoped(ActionSystem system, Action action)
+    private void onActionStoped(ActionSystem system, ActionInstance action)
     {
         checkCharacterState();
     }

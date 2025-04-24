@@ -176,7 +176,7 @@ public class Action : MonoBehaviour
 
         foreach (var actionEffect in applyActionEffects)
         {
-            targetActionSystem.AddAction(inInstigator, actionEffect);
+            //targetActionSystem.AddAction(inInstigator, actionEffect);
         }
     }
 

@@ -319,10 +319,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultActions:
-  - {fileID: -3233021670508417780, guid: 9727f0346951d6b498fcb8505a362cf4, type: 3}
-  - {fileID: -2211235284015479718, guid: 72464367e0f779d4cb82367d437c3678, type: 3}
-  - {fileID: 5376581898198446447, guid: b8f289104158e9f42b150e485142c2f5, type: 3}
-  - {fileID: 3476538233590765099, guid: 0952de6b0c5125840b6d14efa6b5f476, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!65 &93781718
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2588,12 +2588,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultActions:
-  - {fileID: -1792996104821164925, guid: 7852635c7dddd6c4da58acd6ff3da270, type: 3}
-  - {fileID: -2211235284015479718, guid: 72464367e0f779d4cb82367d437c3678, type: 3}
-  - {fileID: 5376581898198446447, guid: b8f289104158e9f42b150e485142c2f5, type: 3}
-  - {fileID: 3476538233590765099, guid: 0952de6b0c5125840b6d14efa6b5f476, type: 3}
-  - {fileID: -5257954526770560615, guid: e2a47eca9aa749641af932554c2b864a, type: 3}
-  - {fileID: 5376581898198446447, guid: 3b358824a0d51d842be640b55a74a1dc, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!114 &1025609577
 MonoBehaviour:
   m_ObjectHideFlags: 0
