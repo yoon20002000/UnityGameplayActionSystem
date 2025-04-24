@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 23abfdf085095414ab7e494a20f65b86, type: 3}
-  m_Name: ActionEffect_Stun
+  m_Name: ActionEffect_Invincibility
   m_EditorClassIdentifier: 
   ActivationTag: 0
-  GrantsTags: 64
+  GrantsTags: 128
   CancelTags: 0
   BlockedTags: 0
   bAutoStart: 1
@@ -39,6 +39,6 @@ MonoBehaviour:
       AnimationDatas: []
     intData:
       AnimationDatas: []
-  duration: 3
+  duration: 5
   period: 0
-  effectType: 0
+  effectType: 3

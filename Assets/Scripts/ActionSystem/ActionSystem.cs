@@ -79,6 +79,7 @@ public class ActionSystem : MonoBehaviour
     public void ApplyGameEffect(Character instigator, ActionData data)
     {
         ActionInstance instance = data.CreateInstacne(this);
+        Assert.IsTrue(instance is ActionEffectInstance);
         activeGameEffects.Add(instance);
 
         instance.Start(instigator);
@@ -89,7 +90,8 @@ public class ActionSystem : MonoBehaviour
     }
     public void RemoveGameEffect(Character instigator, ActionInstance effectInstance)
     {
-        if(activeGameEffects.Remove(effectInstance))
+        Assert.IsTrue(effectInstance is ActionEffectInstance);
+        if (activeGameEffects.Remove(effectInstance))
         {
             effectInstance.Stop(instigator);
             if (OnActionStoped != null)

@@ -319,10 +319,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultActions:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: c3dc2d7c0b8c231498b1722413a634e1, type: 2}
+  - {fileID: 11400000, guid: 731b5d482ab14ef4cbda2936e4dd01f4, type: 2}
+  - {fileID: 11400000, guid: 3ca049907b6e4fa4bb9f6b7f87f46887, type: 2}
+  - {fileID: 11400000, guid: b21da00cbff4b0042974d6c427d76434, type: 2}
 --- !u!65 &93781718
 BoxCollider:
   m_ObjectHideFlags: 0
