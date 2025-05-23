@@ -8,7 +8,7 @@ public class AttackActionData : ActionData
     public bool bIsDistributionDamage;
     public float attackDelay;
     public float duration;
-    public override ActionInstance CreateInstacne(ActionSystem system)
+    public override ActionInstance CreateInstance(ActionSystem system)
     {
         return new AttackActionInstance(this, system);
     }

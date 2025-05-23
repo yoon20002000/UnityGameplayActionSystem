@@ -5,7 +5,7 @@ public class RangedAttackActionData : AttackActionData
 {
     public float maxRange;
     public LayerMask targetLayerMask;
-    public override ActionInstance CreateInstacne(ActionSystem system)
+    public override ActionInstance CreateInstance(ActionSystem system)
     {
         return new RangedAttackActionInstance(this, system);
     }

@@ -42,25 +42,6 @@ public class AnimationController : MonoBehaviour
         playerController.PostUpdate += onUpdateController;
     }
 
-    private void Update()
-    {
-        
-        // animationController.SetFloat(ANIM_ID_MOVESPEED, currentSpeed);
-
-        //if(Input.GetKeyDown(KeyCode.Mouse1))
-        //{
-        //    animationController.SetBool("Aiming",true);
-        //}
-
-        //if(Input.GetKeyUp(KeyCode.Mouse1))
-        //{
-        //    animationController.SetBool("Aiming", false);
-        //}
-        //if(Input.GetKeyDown(KeyCode.Backspace))
-        //{
-            
-        //}
-    }
     private void onUpdateController(Vector3 vel, float arg2)
     {
         float val = vel.magnitude;

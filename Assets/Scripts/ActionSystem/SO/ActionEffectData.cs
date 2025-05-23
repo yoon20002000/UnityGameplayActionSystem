@@ -8,7 +8,7 @@ public class ActionEffectData : ActionData
     public float period;
 
     public EffectType effectType;
-    public override ActionInstance CreateInstacne(ActionSystem system)
+    public override ActionInstance CreateInstance(ActionSystem system)
     {
         return new ActionEffectInstance(this,system);
     }

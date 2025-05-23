@@ -33,7 +33,7 @@ public class ActionSystem : MonoBehaviour
             return;
         }
 
-        var instance = data.CreateInstacne(this);
+        var instance = data.CreateInstance(this);
         actions[data.ActivationTag] = instance;
 
         if(data.bAutoStart && instance.CanStart())
@@ -78,7 +78,7 @@ public class ActionSystem : MonoBehaviour
     }
     public void ApplyGameEffect(Character instigator, ActionData data)
     {
-        ActionInstance instance = data.CreateInstacne(this);
+        ActionInstance instance = data.CreateInstance(this);
         Assert.IsTrue(instance is ActionEffectInstance);
         activeGameEffects.Add(instance);
 

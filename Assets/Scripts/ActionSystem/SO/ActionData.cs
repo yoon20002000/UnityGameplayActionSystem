@@ -22,7 +22,7 @@ public class ActionData : ScriptableObject
     // ActionData 단독으로 안쓰기로 확정시
     // public abstract ActionInstance CreateInstance(ActionSystem system);
 
-    public virtual ActionInstance CreateInstacne(ActionSystem system)
+    public virtual ActionInstance CreateInstance(ActionSystem system)
     {
         return new ActionInstance(this, system);
     }
